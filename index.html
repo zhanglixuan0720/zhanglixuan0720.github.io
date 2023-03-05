@@ -300,15 +300,25 @@
       
         
           
-            <h2 id="Clash-on-Ubuntu"><a href="#Clash-on-Ubuntu" class="headerlink" title="Clash on Ubuntu"></a>Clash on Ubuntu</h2><h3 id="Install-Package"><a href="#Install-Package" class="headerlink" title="Install Package"></a>Install Package</h3><ol>
+            <p>Clash 是一个Go语言开发的多平台代理客户端，用户可以使用Clash在多个平台，如Windows，Linux，Android等平台上使用代理服务。</p>
+<h2 id="Clash-on-Ubuntu"><a href="#Clash-on-Ubuntu" class="headerlink" title="Clash on Ubuntu"></a>Clash on Ubuntu</h2><p>Ubuntu是Linux系列的常用系统，本文主要在Ubuntu上进行了测试，其他系统一般也会有效。 </p>
+<h3 id="Install-Package"><a href="#Install-Package" class="headerlink" title="Install Package"></a>Install Package</h3><ol>
 <li><p>下载Clash安装包<br>从<a href="(https://github.com/Fndroid/clash_for_windows_pkg/releases)">Clash</a>的GitHub页面下载对应版本，以基于X86架构的Ubuntu系统为例，在Assets中下载<a target="_blank" rel="noopener" href="https://github.com/Fndroid/clash_for_windows_pkg/releases/download/0.20.17/Clash.for.Windows-0.20.17-x64-linux.tar.gz">Clash.for.Windows-0.20.17-x64-linux.tar.gz</a>。</p>
 </li>
-<li><p>解压Clash安装包<br>解压 *.tar.gz 文件，移动到~/目录下。</p>
+<li><p>解压Clash安装包<br>解压 *.tar.gz 文件，移动到~/目录下，命名为clash。</p>
 </li>
-<li><p>运行文件<br>进入解压到的文件内，找到cfw文件，运行即可。</p>
+<li><p>运行文件<br>进入clash文件夹内，找到cfw文件，运行即可。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./cfw</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="创建桌面快捷方式"><a href="#创建桌面快捷方式" class="headerlink" title="创建桌面快捷方式"></a>创建桌面快捷方式</h3><p>waiting …</p>
+<h3 id="Create-Desktop-Shortcut"><a href="#Create-Desktop-Shortcut" class="headerlink" title="Create Desktop Shortcut"></a>Create Desktop Shortcut</h3><ol>
+<li><p>下载clash图标文件，存放至clash文件夹内。如下所示，右击选择下载即可获得。<br><img src="/2023/03/03/install-clash/clash.png"></p>
+</li>
+<li><p>在桌面创建文件clash.desktop，写入以下内容，注意将其中的usrname替换为自己的用户名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]</span><br><span class="line">Version=1.0</span><br><span class="line">Type=Application</span><br><span class="line">Terminal=false</span><br><span class="line">Exec=/home/usrname/clash/cfw</span><br><span class="line">Name=Clash</span><br><span class="line">Comment=Clash for Windows</span><br><span class="line">Icon=/home/usrname/clash/clash.png</span><br></pre></td></tr></table></figure></li>
+<li><p>右击桌面clash图片，点击Allow Launching即可正常使用。</p>
+</li>
+</ol>
+<h2 id="Clash-on-Windows"><a href="#Clash-on-Windows" class="headerlink" title="Clash on Windows"></a>Clash on Windows</h2><p>waiting…</p>
 
           
         
