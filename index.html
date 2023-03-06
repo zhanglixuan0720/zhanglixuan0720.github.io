@@ -229,6 +229,127 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://username.github.io/2023/03/06/udev-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lixuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2023/03/06/udev-config/" itemprop="url">udev-配置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-03-06T19:50:14+08:00">
+                2023-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在Ubuntu系统中使用串口时，串口名常常以/dev/ttyUSB0，/dev/ttyACM0等形式出现，用以区分不同设备。当多个相同类型的设备被接入系统时，如/dev/ttyACM*类型设备，会出现/dev/ttyACM0，/dev/ttyACM1，/dev/ttyACM2等多个串口名。串口名后数字，用于区分不同设备，该数字通常由设备上电的顺序决定。当写代码读取多个同类设备时，不同设备对应的代码块可能不同，但程序中的串口名是给定好的，这就对设备上电的顺序有了要求。例如：Arduino串口和某RTK-GPS设备串口名都是/dev/ttyACM*，当上电顺序不同时，程序可能会出错。</p>
+<p>为了使设备名不受接入系统(上电)顺序的影响，可以采用udev对不同设备配置不同型号。</p>
+<h2 id="udev-示例"><a href="#udev-示例" class="headerlink" title="udev 示例"></a>udev 示例</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://username.github.io/2023/03/03/install-clash/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -303,7 +424,7 @@
             <p>Clash 是一个Go语言开发的多平台代理客户端，用户可以使用Clash在多个平台，如Windows，Linux，Android等平台上使用代理服务。</p>
 <h2 id="Clash-on-Ubuntu"><a href="#Clash-on-Ubuntu" class="headerlink" title="Clash on Ubuntu"></a>Clash on Ubuntu</h2><p>Ubuntu是Linux系列的常用系统，本文主要在Ubuntu上进行了测试，其他系统一般也会有效。 </p>
 <h3 id="Install-Package"><a href="#Install-Package" class="headerlink" title="Install Package"></a>Install Package</h3><ol>
-<li><p>下载Clash安装包<br>从<a href="(https://github.com/Fndroid/clash_for_windows_pkg/releases)">Clash</a>的GitHub页面下载对应版本，以基于X86架构的Ubuntu系统为例，在Assets中下载<a target="_blank" rel="noopener" href="https://github.com/Fndroid/clash_for_windows_pkg/releases/download/0.20.17/Clash.for.Windows-0.20.17-x64-linux.tar.gz">Clash.for.Windows-0.20.17-x64-linux.tar.gz</a>。</p>
+<li><p>下载Clash安装包<br>从<a target="_blank" rel="noopener" href="https://github.com/Fndroid/clash_for_windows_pkg/releases">clash_for_windows_pkg</a>的GitHub页面下载对应版本，以基于X86架构的Ubuntu系统为例，在Assets中下载<a target="_blank" rel="noopener" href="https://github.com/Fndroid/clash_for_windows_pkg/releases/download/0.20.17/Clash.for.Windows-0.20.17-x64-linux.tar.gz">Clash.for.Windows-0.20.17-x64-linux.tar.gz</a>。</p>
 </li>
 <li><p>解压Clash安装包<br>解压 *.tar.gz 文件，移动到~/目录下，命名为clash。</p>
 </li>
@@ -314,7 +435,7 @@
 <li><p>下载clash图标文件，存放至clash文件夹内。如下所示，右击选择下载即可获得。</p>
 <div>
 <center>
-<img src="/2023/03/03/install-clash/clash.png" width="25%" height="25%">
+<img src="./install-clash/clash.png" width="25%" height="25%" />
 </center>
 </div></li>
 <li><p>在桌面创建文件clash.desktop，写入以下内容，注意将其中的usrname替换为自己的用户名</p>
@@ -322,8 +443,8 @@
 <li><p>右击桌面clash图片，点击Allow Launching即可正常使用。</p>
 </li>
 </ol>
-<h2 id="Clash-on-Windows"><a href="#Clash-on-Windows" class="headerlink" title="Clash on Windows"></a>Clash on Windows</h2><h3 id="Install-Package-1"><a href="#Install-Package-1" class="headerlink" title="Install Package"></a>Install Package</h3><p>从<a href="(https://github.com/Fndroid/clash_for_windows_pkg/releases)">Clash</a>的GitHub页面下载对应版本，以基于X86架构的Ubuntu系统为例，在Assets中下载<a target="_blank" rel="noopener" href="https://github.com/Fndroid/clash_for_windows_pkg/releases/download/0.20.16/Clash.for.Windows.Setup.0.20.16.exe">Clash.for.Windows.Setup.0.20.16.exe</a>。双击安装即可。</p>
-<h2 id="Clash-on-Android"><a href="#Clash-on-Android" class="headerlink" title="Clash on Android"></a>Clash on Android</h2><p>waiting…</p>
+<h2 id="Clash-on-Windows"><a href="#Clash-on-Windows" class="headerlink" title="Clash on Windows"></a>Clash on Windows</h2><h3 id="Install-Package-1"><a href="#Install-Package-1" class="headerlink" title="Install Package"></a>Install Package</h3><p>从<a target="_blank" rel="noopener" href="https://github.com/Fndroid/clash_for_windows_pkg/releases">clash_for_windows_pkg</a>的GitHub页面下载对应版本。例如：在Assets中下载<a target="_blank" rel="noopener" href="https://github.com/Fndroid/clash_for_windows_pkg/releases/download/0.20.16/Clash.for.Windows.Setup.0.20.16.exe">Clash.for.Windows.Setup.0.20.16.exe</a>。双击安装即可。</p>
+<h2 id="Clash-on-Android"><a href="#Clash-on-Android" class="headerlink" title="Clash on Android"></a>Clash on Android</h2><p>从<a target="_blank" rel="noopener" href="https://github.com/Kr328/ClashForAndroid/releases">ClasClashForAndroid</a>的GitHub页面下载对应版本。例如：在Assets中下载<a target="_blank" rel="noopener" href="https://github.com/Kr328/ClashForAndroid/releases/download/v2.5.12/cfa-2.5.12-premium-universal-release.apk">cfa-2.5.12-premium-universal-release.apk</a>。正常安装即可。</p>
 
           
         
@@ -537,7 +658,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
