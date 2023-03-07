@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Ubuntu,软件配置," />
+  <meta name="keywords" content="Ubuntu,软件配置,Realsense," />
 
 
 
@@ -79,18 +79,19 @@
 
 
 
-<meta name="description" content="引言在Ubuntu系统中使用串口时，串口名常常以&#x2F;dev&#x2F;ttyUSB0，&#x2F;dev&#x2F;ttyACM0等形式出现，用以区分不同设备。当多个相同类型的设备被接入系统时，如&#x2F;dev&#x2F;ttyACM*类型设备，会出现&#x2F;dev&#x2F;ttyACM0，&#x2F;dev&#x2F;ttyACM1，&#x2F;dev&#x2F;ttyACM2等多个串口名。串口名后数字用于区分不同设备，该数字通常由设备上电的顺序决定。当编写程序读取多个同类设备时，不同设备对应的">
+<meta name="description" content="前言使用内核较新的Ubuntu系统时，常常没有支持的二进制可下载SDK，因此需要从源码编译安装Realsense SDK2.0，虽然Realsense官方给出的安装流程已经很全面，但在实际操作时，仍然有一些问题，因此需要该文档。 本文主要目的是辅助从源码编译安装Realsense SDK2.0，但仍然加入了下载Realsense-ROS-Wapper的步骤，使用该文档可同时完成 Realsense">
 <meta property="og:type" content="article">
-<meta property="og:title" content="udev-配置">
-<meta property="og:url" content="https://zhanglixuan0720.github.io/2023/03/06/udev-config/index.html">
+<meta property="og:title" content="从源码编译安装Realsense SDK 2.0">
+<meta property="og:url" content="https://zhanglixuan0720.github.io/2023/03/07/install-realsense-sdk/index.html">
 <meta property="og:site_name" content="Lixuan&#39;s Blog">
-<meta property="og:description" content="引言在Ubuntu系统中使用串口时，串口名常常以&#x2F;dev&#x2F;ttyUSB0，&#x2F;dev&#x2F;ttyACM0等形式出现，用以区分不同设备。当多个相同类型的设备被接入系统时，如&#x2F;dev&#x2F;ttyACM*类型设备，会出现&#x2F;dev&#x2F;ttyACM0，&#x2F;dev&#x2F;ttyACM1，&#x2F;dev&#x2F;ttyACM2等多个串口名。串口名后数字用于区分不同设备，该数字通常由设备上电的顺序决定。当编写程序读取多个同类设备时，不同设备对应的">
+<meta property="og:description" content="前言使用内核较新的Ubuntu系统时，常常没有支持的二进制可下载SDK，因此需要从源码编译安装Realsense SDK2.0，虽然Realsense官方给出的安装流程已经很全面，但在实际操作时，仍然有一些问题，因此需要该文档。 本文主要目的是辅助从源码编译安装Realsense SDK2.0，但仍然加入了下载Realsense-ROS-Wapper的步骤，使用该文档可同时完成 Realsense">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-03-06T11:50:14.000Z">
-<meta property="article:modified_time" content="2023-03-07T08:55:26.926Z">
+<meta property="article:published_time" content="2023-03-07T12:54:42.000Z">
+<meta property="article:modified_time" content="2023-03-07T13:49:34.363Z">
 <meta property="article:author" content="Lixuan Zhang">
 <meta property="article:tag" content="Ubuntu">
 <meta property="article:tag" content="软件配置">
+<meta property="article:tag" content="Realsense">
 <meta name="twitter:card" content="summary">
 
 
@@ -121,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://zhanglixuan0720.github.io/2023/03/06/udev-config/"/>
+  <link rel="canonical" href="https://zhanglixuan0720.github.io/2023/03/07/install-realsense-sdk/"/>
 
 
 
 
 
-  <title>udev-配置 | Lixuan's Blog</title>
+  <title>从源码编译安装Realsense SDK 2.0 | Lixuan's Blog</title>
   
 
 
@@ -244,7 +245,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2023/03/06/udev-config/">
+    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2023/03/07/install-realsense-sdk/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -261,7 +262,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">udev-配置</h1>
+          <h1 class="post-title" itemprop="name headline">从源码编译安装Realsense SDK 2.0</h1>
         
 
         <div class="post-meta">
@@ -273,8 +274,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-03-06T19:50:14+08:00">
-                2023-03-06
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-03-07T20:54:42+08:00">
+                2023-03-07
               </time>
             
 
@@ -333,24 +334,25 @@
       
 
       
-        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在Ubuntu系统中使用串口时，串口名常常以/dev/ttyUSB0，/dev/ttyACM0等形式出现，用以区分不同设备。当多个相同类型的设备被接入系统时，如/dev/ttyACM*类型设备，会出现/dev/ttyACM0，/dev/ttyACM1，/dev/ttyACM2等多个串口名。串口名后数字用于区分不同设备，该数字通常由设备上电的顺序决定。当编写程序读取多个同类设备时，不同设备对应的程序可能不同，但由于程序中的串口名是给定好的，这就对设备上电的顺序有了要求。例如：Arduino串口和某RTK-GPS设备串口名都是/dev/ttyACM*，程序1用于读取Arduino串口，串口名设置为/dev/ttyACM0，程序2用于读取RTK-GPS串口，串口名设置为/dev/ttyACM1，当上电顺序不同时，程序可能会出错。</p>
-<p>为了使设备名不受接入系统(上电)顺序的影响，可以采用udev对不同设备配置不同型号。</p>
-<h2 id="udev-示例"><a href="#udev-示例" class="headerlink" title="udev 示例"></a>udev 示例</h2><p>一个编写好的，用于设置某设备静态串口名的udev文件如下所示：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">KERNEL==&quot;ttyACM*&quot;, ATTRS&#123;idVendor&#125;==&quot;1546&quot;,ATTRS&#123;idProduct&#125;==&quot;01a9&quot;,SYMLINK=&quot;ttyGPS&quot;</span><br></pre></td></tr></table></figure>
-<p>KERNEL：系统匹配的原串口名；<br>idVendor：厂商号；<br>idProduct：产品号；<br>SYMLINK：设置的静态串口名，以软链接的形式存在。<br>将该文件以NUM-FILENAME.rules的形式保存在/etc/udev/rules.d文件下，重启系统后，系统若识别到满足要求的设备，就会添加/dev/ttyGPS软链接，指向/dev/tyyACM*。该文件名中的NUM指示了系统运行各种.rules文件的顺序，取值范围为0~99。例如命名某.rules文件</p>
-<p>其中idVendor和idProduct可以由lsusb指令查询得到</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lsusb</span><br></pre></td></tr></table></figure>
-<p>如下Bus 004，ID中1d6b表示idVendor，0003表示idProduct。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub</span><br><span class="line">Bus 003 Device 002: ID 8087:0033 Intel Corp.</span><br><span class="line">Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</span><br><span class="line">Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub</span><br><span class="line">Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</span><br></pre></td></tr></table></figure>
-
-<h2 id="相关指令"><a href="#相关指令" class="headerlink" title="相关指令"></a>相关指令</h2><p>查看当前连接的设备</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ls /dev/</span><br></pre></td></tr></table></figure>
-<p>查看当前连接的某类型设备，如：ttyACM*</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ls /dev/ttyACM*</span><br></pre></td></tr></table></figure>
-<p>查看电脑连接的串口设备</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lsusb</span><br></pre></td></tr></table></figure>
-
-<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fah936861121/p/6496608.html">udev规则以及编写</a></p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>使用内核较新的Ubuntu系统时，常常没有支持的二进制可下载SDK，因此需要从源码编译安装Realsense SDK2.0，虽然Realsense官方给出的安装流程已经很全面，但在实际操作时，仍然有一些问题，因此需要该文档。</p>
+<p>本文主要目的是辅助从源码编译安装Realsense SDK2.0，但仍然加入了下载Realsense-ROS-Wapper的步骤，使用该文档可同时完成 Realsense-SDK (from source) 和 Realsense-ROS-Wapper (from bin) 的下载配置。</p>
+<p>本文面向Ubuntu系统，测试系统为x86架构64位系统，内核版本为5.15.0-67-generic。</p>
+<h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><ol>
+<li><p>以二进制形式下载Realsense-ROS-Wapper</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install ros-$ROS_DISTRO-realsense2-camera</span><br><span class="line">$ sudo apt install ros-$ROS_DISTRO-realsense2-description</span><br></pre></td></tr></table></figure>
+<p>在<a target="_blank" rel="noopener" href="https://github.com/IntelRealSense/realsense-ros/tree/ros1-legacy">Realsense-ROS-Wapper</a>中介绍了 Method 1: The ROS distribution，可以以二进制方式下载Realsense-ROS-Wapper，但下载后一般无法正常使用，仍然需要下载Realsense SDK 2.0。Method 2: The RealSense™ distribution - Step1 介绍了如何安装Realsense SDK 2.0，但对于新版本的Ubuntu，一般无法成功，需要从源码安装。从源码安装的参考页面为<a target="_blank" rel="noopener" href="https://github.com/IntelRealSense/librealsense/blob/master/doc/installation.md">the instructions under Linux Installation</a>，下文将基于该页面进行。</p>
+</li>
+<li><p>下载Realsense SDK 2.0源码<br>从GitHub下载Realsense SDK 2.0。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/IntelRealSense/librealsense.git</span><br></pre></td></tr></table></figure></li>
+<li><p>进入 librealsense 目录，执行命令，这一步及后续步骤中，系统不能接入摄像头。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ cd librealsense</span><br><span class="line">$ sudo apt install git libssl-dev libusb-1.0-0-dev libudev-dev pkg-config libgtk-3-dev</span><br><span class="line">$ sudo apt install libglfw3-dev libgl1-mesa-dev libglu1-mesa-dev at</span><br><span class="line">$ ./scripts/setup_udev_rules.sh</span><br><span class="line">$ ./scripts/patch-realsense-ubuntu-lts-hwe.sh # Build and apply patched kernel module</span><br><span class="line">$ echo &#x27;hid_sensor_custom&#x27; | sudo tee -a /etc/modules</span><br></pre></td></tr></table></figure></li>
+<li><p>编译Realsense SDK 2.0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir build &amp;&amp; cd build</span><br><span class="line">$ cmake ../ -DFORCE_RSUSB_BACKEND=true -DCMAKE_BUILD_TYPE=release -DBUILD_EXAMPLES=true -DBUILD_GRAPHICAL_EXAMPLES=true</span><br><span class="line">$ sudo make uninstall &amp;&amp; make clean &amp;&amp; make &amp;&amp; sudo make install</span><br></pre></td></tr></table></figure></li>
+<li><p>检查安装效果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ realsense-viewer</span><br></pre></td></tr></table></figure>
+<p>如出现GUI框，并且接入摄像头后可以正常使用，证明安装成功。</p>
+</li>
+</ol>
 
       
     </div>
@@ -372,6 +374,8 @@
           
             <a href="/tags/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE/" rel="tag"># 软件配置</a>
           
+            <a href="/tags/Realsense/" rel="tag"># Realsense</a>
+          
         </div>
       
 
@@ -383,8 +387,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2023/03/03/install-clash/" rel="next" title="下载和配置Clash">
-                <i class="fa fa-chevron-left"></i> 下载和配置Clash
+              <a href="/2023/03/07/install-anaconda/" rel="next" title="下载和安装Anaconda">
+                <i class="fa fa-chevron-left"></i> 下载和安装Anaconda
               </a>
             
           </div>
@@ -393,8 +397,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2023/03/07/config-ubuntu/" rel="prev" title="配置Ubuntu">
-                配置Ubuntu <i class="fa fa-chevron-right"></i>
+              <a href="/2023/03/07/linux-command/" rel="prev" title="Linux 指令">
+                Linux 指令 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -547,7 +551,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#udev-%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.</span> <span class="nav-text">udev 示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%8C%87%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">相关指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="nav-number">4.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">下载安装</span></a></li></ol></div>
             
 
           </div>
