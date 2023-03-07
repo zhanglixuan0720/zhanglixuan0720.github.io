@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="FriendsKezhi’s Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="links">
-<meta property="og:url" content="https://zhanglixuan0720.github.io/links/index.html">
+<meta name="description" content="引言该文档仅适用于VIPL-NVI Project系统配置，且为提纲式的说明，暂不适用于其他系统。 NVI-EDGEHardware 购买硬件设备：mini-PC、硬盘、内存、mini-PC电源线（！！！）。  特别说明：mini-PC：须至少有3个及以上 USB-A 3.0+ 接口，网卡 WIFI-6 和 Bluetooth5.0 标准；硬盘：固态1T+。内存：16GB+。  安装硬件设备并启动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="配置NVI系统">
+<meta property="og:url" content="https://zhanglixuan0720.github.io/2023/03/07/config-nvi-system/index.html">
 <meta property="og:site_name" content="Lixuan&#39;s Blog">
-<meta property="og:description" content="FriendsKezhi’s Blog">
+<meta property="og:description" content="引言该文档仅适用于VIPL-NVI Project系统配置，且为提纲式的说明，暂不适用于其他系统。 NVI-EDGEHardware 购买硬件设备：mini-PC、硬盘、内存、mini-PC电源线（！！！）。  特别说明：mini-PC：须至少有3个及以上 USB-A 3.0+ 接口，网卡 WIFI-6 和 Bluetooth5.0 标准；硬盘：固态1T+。内存：16GB+。  安装硬件设备并启动">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-03-07T02:33:57.000Z">
-<meta property="article:modified_time" content="2023-03-07T06:09:48.702Z">
+<meta property="article:published_time" content="2023-03-07T09:37:01.000Z">
+<meta property="article:modified_time" content="2023-03-07T10:57:53.005Z">
 <meta property="article:author" content="Lixuan Zhang">
 <meta name="twitter:card" content="summary">
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="https://zhanglixuan0720.github.io/links/"/>
+  <link rel="canonical" href="https://zhanglixuan0720.github.io/2023/03/07/config-nvi-system/"/>
 
 
 
 
 
-  <title>links | Lixuan's Blog</title>
+  <title>配置NVI系统 | Lixuan's Blog</title>
   
 
 
@@ -230,33 +230,169 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2023/03/07/config-nvi-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lixuan's Blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">links</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h2 id="Friends"><a href="#Friends" class="headerlink" title="Friends"></a>Friends</h2><h3 id="Kezhi’s-Blog"><a href="#Kezhi’s-Blog" class="headerlink" title="Kezhi’s Blog"></a><a target="_blank" rel="noopener" href="https://www.kezhi.tech/links/">Kezhi’s Blog</a></h3>
+          <h1 class="post-title" itemprop="name headline">配置NVI系统</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-03-07T17:37:01+08:00">
+                2023-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>该文档仅适用于VIPL-NVI Project系统配置，且为提纲式的说明，暂不适用于其他系统。</p>
+<h2 id="NVI-EDGE"><a href="#NVI-EDGE" class="headerlink" title="NVI-EDGE"></a>NVI-EDGE</h2><h3 id="Hardware"><a href="#Hardware" class="headerlink" title="Hardware"></a>Hardware</h3><ol>
+<li>购买硬件设备：mini-PC、硬盘、内存、mini-PC电源线（！！！）。</li>
+</ol>
+<p>特别说明：<br>mini-PC：须至少有3个及以上 USB-A 3.0+ 接口，网卡 WIFI-6 和 Bluetooth5.0 标准；<br>硬盘：固态1T+。<br>内存：16GB+。</p>
+<ol start="2">
+<li>安装硬件设备并启动。</li>
+</ol>
+<h3 id="Software"><a href="#Software" class="headerlink" title="Software"></a>Software</h3><ol>
+<li><p>安装 Ubuntu20.04 系统，默认配置，直接刷机。系统设置为开机自动登录，密码与其他机器密码保持一致。计算机名建议为“某小组英文名-vipl”。</p>
+</li>
+<li><p>连接至 NVI Project 专用局域网，并配置IPv4地址为 192.168.1.* | 255.255.255.0 | 192.168.1.1 。<br>其中*的合法取值为1-254，这里建议*&gt;200。</p>
+</li>
+<li><p>更换国内源，可参考<a href="/2023/03/07/config-ubuntu/" title="配置Ubuntu">配置Ubuntu</a>。</p>
+</li>
+<li><p>下载配置必备系统工具，可参考<a href="/2023/03/07/config-ubuntu/" title="配置Ubuntu">配置Ubuntu</a>，下载完成后，开启ssh，以方便远程连接。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh start</span><br></pre></td></tr></table></figure></li>
+<li><p>下载和配置Clash，可参考<a href="/2023/03/03/install-clash/" title="下载和配置Clash">下载和配置Clash</a>。（可选）</p>
+</li>
+<li><p>下载和配置Pinyin，可参考<a href="/2023/03/07/config-ubuntu/" title="配置Ubuntu">配置Ubuntu</a>。（可选）</p>
+</li>
+<li><p>下载VSCode，可参考<a href="/2023/03/07/config-ubuntu/" title="配置Ubuntu">配置Ubuntu</a>。</p>
+</li>
+<li><p>下载安装Anaconda，可参考<a href="/2023/03/07/config-nvi-system/" title="下载和安装Anaconda">下载和安装Anaconda</a>，下载完成后，创建 NVI-Project 环境，用于下载后续Python包。建议环境名以edge结尾，如需配置好的环境，可联系<a href="e-Mail">^e-mail</a>。</p>
+</li>
+<li><p>下载安装ROS，可参考<a target="_blank" rel="noopener" href="https://www.ncnynl.com/archives/202007/3796.html">安装并配置ROS环境（Noetic版本）</a></p>
+</li>
+</ol>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/03/07/config-ubuntu/" rel="next" title="配置Ubuntu">
+                <i class="fa fa-chevron-left"></i> 配置Ubuntu
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/03/07/install-anaconda/" rel="prev" title="下载和安装Anaconda">
+                下载和安装Anaconda <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -389,7 +525,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Friends"><span class="nav-number">1.</span> <span class="nav-text">Friends</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kezhi%E2%80%99s-Blog"><span class="nav-number">1.1.</span> <span class="nav-text">Kezhi’s Blog</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NVI-EDGE"><span class="nav-number">2.</span> <span class="nav-text">NVI-EDGE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hardware"><span class="nav-number">2.1.</span> <span class="nav-text">Hardware</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Software"><span class="nav-number">2.2.</span> <span class="nav-text">Software</span></a></li></ol></li></ol></div>
             
 
           </div>
