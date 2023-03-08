@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="前言本文记录了一些Linux指令，用于备忘和查找，无序排列。 指令 查看系统内核版本（多条可用指令）12$ cat &#x2F;proc&#x2F;version$ uname -srm">
+<meta name="description" content="前言本文记录了一些Linux指令，用于备忘和查找，无序排列。 指令 查看系统内核版本（多条可用指令）12$ cat &#x2F;proc&#x2F;version$ uname -srm 在本地和远程之间复制文件12$ scp username@servername:&#x2F;path&#x2F;filename local_dir # 从远程机器下载文件$ scp &#x2F;local_path&#x2F;filename username@serv">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 指令">
 <meta property="og:url" content="https://zhanglixuan0720.github.io/2023/03/07/linux-command/index.html">
 <meta property="og:site_name" content="Lixuan&#39;s Blog">
-<meta property="og:description" content="前言本文记录了一些Linux指令，用于备忘和查找，无序排列。 指令 查看系统内核版本（多条可用指令）12$ cat &#x2F;proc&#x2F;version$ uname -srm">
+<meta property="og:description" content="前言本文记录了一些Linux指令，用于备忘和查找，无序排列。 指令 查看系统内核版本（多条可用指令）12$ cat &#x2F;proc&#x2F;version$ uname -srm 在本地和远程之间复制文件12$ scp username@servername:&#x2F;path&#x2F;filename local_dir # 从远程机器下载文件$ scp &#x2F;local_path&#x2F;filename username@serv">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-03-07T13:25:55.000Z">
-<meta property="article:modified_time" content="2023-03-07T13:30:28.870Z">
+<meta property="article:modified_time" content="2023-03-08T13:18:16.677Z">
 <meta property="article:author" content="Lixuan Zhang">
 <meta property="article:tag" content="Ubuntu">
 <meta property="article:tag" content="软件配置">
@@ -357,6 +357,10 @@
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文记录了一些Linux指令，用于备忘和查找，无序排列。</p>
 <h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><ul>
 <li>查看系统内核版本（多条可用指令）<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cat /proc/version</span><br><span class="line">$ uname -srm</span><br></pre></td></tr></table></figure></li>
+<li>在本地和远程之间复制文件<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ scp username@servername:/path/filename local_dir # 从远程机器下载文件</span><br><span class="line">$ scp /local_path/filename username@servername:/path # 上传本地文件到远程机器  </span><br></pre></td></tr></table></figure></li>
+<li>zip 压缩/解压缩文件<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ zip -r filename.zip filename filedir/ # 压缩指定文件和文件目录</span><br><span class="line">$ zip -d filename.zip filename # 从指定压缩包中删除指定文件</span><br><span class="line">$ zip -u filename.zip filename # 追加指定文件到指定压缩包中</span><br><span class="line">$ zip -f filename.zip filename # 更新指定压缩包中指定文件</span><br><span class="line">$ zip -e filename.zip filename # 加密压缩文件，密码会提示输入</span><br><span class="line">$ unzip filename.zip -d filedir # 解压缩文件到指定目录</span><br></pre></td></tr></table></figure></li>
+<li>tar 压缩/解压缩文件<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tar -zcvf filename.tar.gz filename # 压缩指定文件或文件目录</span><br><span class="line">$ tar -zxvf filename.tar.gz -C filedir # 解压缩文件到指定目录</span><br></pre></td></tr></table></figure>
+常用参数选项<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-z --gzip, --gunzip, --ungzip   ：通过 gzip 来归档压缩，压缩后的文件为*.tar.gz</span><br><span class="line">-j --bzip2                      ：通过 bzip2 来归档压缩文件，压缩后的文件为*.tar.bz2</span><br><span class="line">-J			        : 通过 xz 压缩工具归档压缩文件，压缩后的文件为*.tar.xz，压缩率最高，也最慢</span><br><span class="line">-c --create			：创建新的归档文件，压缩文件</span><br><span class="line">-x --extract		        ：解压文件</span><br><span class="line">-v --verbose 		        ：可视化，显示tar处理文件的输出信息</span><br><span class="line">-f --file 			：要操作的文件名</span><br><span class="line">-t --list 			：查看文件中的内容</span><br><span class="line">-C --directory=DIR              ：解压文件至指定的目录</span><br></pre></td></tr></table></figure></li>
 </ul>
 
       
