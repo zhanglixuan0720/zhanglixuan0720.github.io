@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Ubuntu,软件配置," />
+  <meta name="keywords" content="Ubuntu,软件配置,Linux,Tool," />
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="安装Ubuntu系统后，需要安装或配置一些软件包，以提升使用体验，这里列举几个常用的配置及其链接。注：下述配置均基于Ubuntu 20.04测试。  更换下载源使用国内源而非Ubuntu官方源，将提升下载速度。  安装必备系统工具   1sudo apt install ssh net-tools vim htop   Google Pinyin如果Ubuntu系统以英文安装，需要中文输入的用户需">
+<meta name="description" content="前言本文记录了一些Linux常用工具及其指令，用于备忘和查找，无序排列。 工具Tmux在使用Linux终端时，一般关闭终端（会话窗口），终端中运行的程序也会中止。Tmux 支持Linux会话与窗口的分离，在会话与窗口分离后，会话中的程序仍然在运行。同时，Tmux支持用户重新绑定到某次会话上，在之前分离的会话上继续操作。 下载1sudo apt install tmux  常用指令注：注释括号中的字">
 <meta property="og:type" content="article">
-<meta property="og:title" content="配置Ubuntu">
-<meta property="og:url" content="https://zhanglixuan0720.github.io/2023/03/07/config-ubuntu/index.html">
+<meta property="og:title" content="Linux 常用工具">
+<meta property="og:url" content="https://zhanglixuan0720.github.io/2023/03/17/linux-tools/index.html">
 <meta property="og:site_name" content="Lixuan&#39;s Blog">
-<meta property="og:description" content="安装Ubuntu系统后，需要安装或配置一些软件包，以提升使用体验，这里列举几个常用的配置及其链接。注：下述配置均基于Ubuntu 20.04测试。  更换下载源使用国内源而非Ubuntu官方源，将提升下载速度。  安装必备系统工具   1sudo apt install ssh net-tools vim htop   Google Pinyin如果Ubuntu系统以英文安装，需要中文输入的用户需">
+<meta property="og:description" content="前言本文记录了一些Linux常用工具及其指令，用于备忘和查找，无序排列。 工具Tmux在使用Linux终端时，一般关闭终端（会话窗口），终端中运行的程序也会中止。Tmux 支持Linux会话与窗口的分离，在会话与窗口分离后，会话中的程序仍然在运行。同时，Tmux支持用户重新绑定到某次会话上，在之前分离的会话上继续操作。 下载1sudo apt install tmux  常用指令注：注释括号中的字">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-03-07T09:09:11.000Z">
-<meta property="article:modified_time" content="2023-03-07T13:12:55.712Z">
+<meta property="article:published_time" content="2023-03-17T02:12:07.000Z">
+<meta property="article:modified_time" content="2023-03-17T02:31:10.333Z">
 <meta property="article:author" content="Lixuan Zhang">
 <meta property="article:tag" content="Ubuntu">
 <meta property="article:tag" content="软件配置">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Tool">
 <meta name="twitter:card" content="summary">
 
 
@@ -121,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://zhanglixuan0720.github.io/2023/03/07/config-ubuntu/"/>
+  <link rel="canonical" href="https://zhanglixuan0720.github.io/2023/03/17/linux-tools/"/>
 
 
 
 
 
-  <title>配置Ubuntu | Lixuan's Blog</title>
+  <title>Linux 常用工具 | Lixuan's Blog</title>
   
 
 
@@ -264,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2023/03/07/config-ubuntu/">
+    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2023/03/17/linux-tools/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -281,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">配置Ubuntu</h1>
+          <h1 class="post-title" itemprop="name headline">Linux 常用工具</h1>
         
 
         <div class="post-meta">
@@ -293,8 +295,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-03-07T17:09:11+08:00">
-                2023-03-07
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-03-17T10:12:07+08:00">
+                2023-03-17
               </time>
             
 
@@ -353,23 +355,16 @@
       
 
       
-        <p>安装Ubuntu系统后，需要安装或配置一些软件包，以提升使用体验，这里列举几个常用的配置及其链接。<br>注：下述配置均基于Ubuntu 20.04测试。</p>
-<ol>
-<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dou3516/article/details/108196179">更换下载源</a><br>使用国内源而非Ubuntu官方源，将提升下载速度。</p>
-</li>
-<li><p>安装必备系统工具</p>
-</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install ssh net-tools vim htop</span><br></pre></td></tr></table></figure>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文记录了一些Linux常用工具及其指令，用于备忘和查找，无序排列。</p>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><h3 id="Tmux"><a href="#Tmux" class="headerlink" title="Tmux"></a>Tmux</h3><p>在使用Linux终端时，一般关闭终端（会话窗口），终端中运行的程序也会中止。Tmux 支持Linux会话与窗口的分离，在会话与窗口分离后，会话中的程序仍然在运行。同时，Tmux支持用户重新绑定到某次会话上，在之前分离的会话上继续操作。</p>
+<h4 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install tmux</span><br></pre></td></tr></table></figure>
 
-<ol start="3">
-<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42474104/article/details/127600457">Google Pinyin</a><br>如果Ubuntu系统以英文安装，需要中文输入的用户需要下载中文字体。</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://code.visualstudio.com/">VSCode</a><br>VSCode是一款优秀的代码编辑器，值得下载配置。在官网下载即可，Ubuntu须下载 Linux x64 中 .deb结尾软件包。<br>下载命令：（*表示下载的版本，这里输入code后用Tab补全即可）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/Downloads/</span><br><span class="line">sudo apt install ./code_*</span><br></pre></td></tr></table></figure></li>
-<li><p><a target="_blank" rel="noopener" href="https://www.myfreax.com/how-to-configure-static-ip-address-on-ubuntu-20-04/">配置静态IP</a><br>在局域网中，配置静态IP可以方便其他机器连接。</p>
-</li>
-</ol>
+<h4 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h4><p>注：注释括号中的字符为对应指令快捷键。针对 Ctrl+b 的前缀快捷键，需要先按下 Ctrl+b， 松开后再按其他键。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tmux # 进入Tmux窗口，这时会新建一个会话</span><br><span class="line">exit # 退出Tmux窗口，这时会话被关闭 （Ctrl+d）</span><br><span class="line">tmux new -s session-name # 新建一个名为session-name的会话</span><br><span class="line">tmux attach -t session-num/session-name # 重新绑定到某会话，可以使用会话名或者会话编号指定会话</span><br><span class="line">tmux detach # 将当前会话与窗口分离 （Ctrl+b d）</span><br><span class="line">tmux ls / list-session # 查看当前所有Tmux会话</span><br><span class="line">tmux kill-session -t session-num/session-name # 杀死某会话，可以使用会话名或者会话编号指定会话</span><br><span class="line">tmux rename-session -t session-num new-name # 重命名会话编码为session-num的会话名为new-name （Ctrl+b $）</span><br></pre></td></tr></table></figure>
+<p>其他快捷键</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+d [ # 查看会话日志消息（输出的内容）</span><br></pre></td></tr></table></figure>
+
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2019/10/tmux.html">Tmux 使用教程</a></p>
 
       
     </div>
@@ -391,6 +386,10 @@
           
             <a href="/tags/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE/" rel="tag"># 软件配置</a>
           
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Tool/" rel="tag"># Tool</a>
+          
         </div>
       
 
@@ -402,8 +401,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2023/03/06/udev-config/" rel="next" title="udev-配置">
-                <i class="fa fa-chevron-left"></i> udev-配置
+              <a href="/2023/03/07/linux-command/" rel="next" title="Linux 指令">
+                <i class="fa fa-chevron-left"></i> Linux 指令
               </a>
             
           </div>
@@ -412,8 +411,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2023/03/07/config-nvi-system/" rel="prev" title="配置NVI系统">
-                配置NVI系统 <i class="fa fa-chevron-right"></i>
+              <a href="/2023/03/17/install-nginx/" rel="prev" title="Nginx的下载与配置">
+                Nginx的下载与配置 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -466,8 +465,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -547,6 +555,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">2.</span> <span class="nav-text">工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tmux"><span class="nav-number">2.1.</span> <span class="nav-text">Tmux</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD"><span class="nav-number">2.1.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="nav-number">2.1.2.</span> <span class="nav-text">常用指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">2.1.3.</span> <span class="nav-text">参考链接</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
