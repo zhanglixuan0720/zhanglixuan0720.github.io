@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="前言本文记录了一些Linux常用工具及其指令，用于备忘和查找，无序排列。 工具Tmux在使用Linux终端时，一般关闭终端（会话窗口），终端中运行的程序也会中止。Tmux 支持Linux会话与窗口的分离，在会话与窗口分离后，会话中的程序仍然在运行。同时，Tmux支持用户重新绑定到某次会话上，在之前分离的会话上继续操作。 下载1sudo apt install tmux  常用指令注：注释括号中的字">
+<meta name="description" content="前言本文记录了一些Linux常用工具及其指令，用于备忘和查找，无序排列。 工具Tmux在使用Linux终端时，一般关闭终端（会话窗口），终端中运行的程序也会中止。Tmux 支持Linux会话与窗口的分离，在会话与窗口分离后，会话中的程序仍然在运行。同时，Tmux支持用户重新绑定到某次会话上，在之前分离的会话上继续操作。 下载1$ sudo apt install tmux  常用指令注：注释括号中">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 常用工具">
 <meta property="og:url" content="https://zhanglixuan0720.github.io/2023/03/17/linux-tools/index.html">
 <meta property="og:site_name" content="Lixuan&#39;s Blog">
-<meta property="og:description" content="前言本文记录了一些Linux常用工具及其指令，用于备忘和查找，无序排列。 工具Tmux在使用Linux终端时，一般关闭终端（会话窗口），终端中运行的程序也会中止。Tmux 支持Linux会话与窗口的分离，在会话与窗口分离后，会话中的程序仍然在运行。同时，Tmux支持用户重新绑定到某次会话上，在之前分离的会话上继续操作。 下载1sudo apt install tmux  常用指令注：注释括号中的字">
+<meta property="og:description" content="前言本文记录了一些Linux常用工具及其指令，用于备忘和查找，无序排列。 工具Tmux在使用Linux终端时，一般关闭终端（会话窗口），终端中运行的程序也会中止。Tmux 支持Linux会话与窗口的分离，在会话与窗口分离后，会话中的程序仍然在运行。同时，Tmux支持用户重新绑定到某次会话上，在之前分离的会话上继续操作。 下载1$ sudo apt install tmux  常用指令注：注释括号中">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-03-17T02:12:07.000Z">
-<meta property="article:modified_time" content="2023-03-17T02:31:10.333Z">
+<meta property="article:modified_time" content="2023-03-17T14:05:33.944Z">
 <meta property="article:author" content="Lixuan Zhang">
 <meta property="article:tag" content="Ubuntu">
 <meta property="article:tag" content="软件配置">
@@ -357,15 +357,18 @@
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文记录了一些Linux常用工具及其指令，用于备忘和查找，无序排列。</p>
 <h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><h3 id="Tmux"><a href="#Tmux" class="headerlink" title="Tmux"></a>Tmux</h3><p>在使用Linux终端时，一般关闭终端（会话窗口），终端中运行的程序也会中止。Tmux 支持Linux会话与窗口的分离，在会话与窗口分离后，会话中的程序仍然在运行。同时，Tmux支持用户重新绑定到某次会话上，在之前分离的会话上继续操作。</p>
-<h4 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install tmux</span><br></pre></td></tr></table></figure>
+<h4 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install tmux</span><br></pre></td></tr></table></figure>
 
 <h4 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h4><p>注：注释括号中的字符为对应指令快捷键。针对 Ctrl+b 的前缀快捷键，需要先按下 Ctrl+b， 松开后再按其他键。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tmux # 进入Tmux窗口，这时会新建一个会话</span><br><span class="line">exit # 退出Tmux窗口，这时会话被关闭 （Ctrl+d）</span><br><span class="line">tmux new -s session-name # 新建一个名为session-name的会话</span><br><span class="line">tmux attach -t session-num/session-name # 重新绑定到某会话，可以使用会话名或者会话编号指定会话</span><br><span class="line">tmux detach # 将当前会话与窗口分离 （Ctrl+b d）</span><br><span class="line">tmux ls / list-session # 查看当前所有Tmux会话</span><br><span class="line">tmux kill-session -t session-num/session-name # 杀死某会话，可以使用会话名或者会话编号指定会话</span><br><span class="line">tmux rename-session -t session-num new-name # 重命名会话编码为session-num的会话名为new-name （Ctrl+b $）</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ tmux # 进入Tmux窗口，这时会新建一个会话</span><br><span class="line">$ exit # 退出Tmux窗口，这时会话被关闭 （Ctrl+d）</span><br><span class="line">$ tmux new -s session-name # 新建一个名为session-name的会话</span><br><span class="line">$ tmux attach -t session-num/session-name # 重新绑定到某会话，可以使用会话名或者会话编号指定会话</span><br><span class="line">$ tmux detach # 将当前会话与窗口分离 （Ctrl+b d）</span><br><span class="line">$ tmux ls / list-session # 查看当前所有Tmux会话</span><br><span class="line">$ tmux kill-session -t session-num/session-name # 杀死某会话，可以使用会话名或者会话编号指定会话</span><br><span class="line">$ tmux rename-session -t session-num new-name # 重命名会话编码为session-num的会话名为new-name （Ctrl+b $）</span><br></pre></td></tr></table></figure>
 <p>其他快捷键</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+d [ # 查看会话日志消息（输出的内容）</span><br></pre></td></tr></table></figure>
 
 <h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2019/10/tmux.html">Tmux 使用教程</a></p>
+<h3 id="Tree"><a href="#Tree" class="headerlink" title="Tree"></a>Tree</h3><p>Tree 是一种以树型结构显示文件夹目录结构的工具</p>
+<h4 id="下载-1"><a href="#下载-1" class="headerlink" title="下载"></a>下载</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install tree</span><br></pre></td></tr></table></figure>
 
+<h4 id="常用指令-1"><a href="#常用指令-1" class="headerlink" title="常用指令"></a>常用指令</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ tree # 显示当前文件夹目录结构</span><br><span class="line">$ tree --help # 查看帮助信息</span><br><span class="line">$ tree -L N # 显示当前目录第N级的目录和文件</span><br><span class="line">$ tree &gt; filename # 将目录结构信息保存在文件中</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -565,7 +568,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">2.</span> <span class="nav-text">工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tmux"><span class="nav-number">2.1.</span> <span class="nav-text">Tmux</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD"><span class="nav-number">2.1.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="nav-number">2.1.2.</span> <span class="nav-text">常用指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">2.1.3.</span> <span class="nav-text">参考链接</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">2.</span> <span class="nav-text">工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tmux"><span class="nav-number">2.1.</span> <span class="nav-text">Tmux</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD"><span class="nav-number">2.1.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="nav-number">2.1.2.</span> <span class="nav-text">常用指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">2.1.3.</span> <span class="nav-text">参考链接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tree"><span class="nav-number">2.2.</span> <span class="nav-text">Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">常用指令</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
