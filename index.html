@@ -992,13 +992,13 @@
 fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-name s     #寻找文件名带s的文件</span><br><span class="line">-name *s    #寻找以s结尾的文件</span><br><span class="line">-name s*    #寻找以s开头的文件</span><br><span class="line">find -amin 10  #寻找过去10分钟访问过的文件</span><br><span class="line">find -mtime 1  #寻找过去24小时修改过的文件</span><br></pre></td></tr></table></figure></li>
 <li>locate<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ locate filename # 定位文件位置</span><br></pre></td></tr></table></figure>
 该方法从Linux文件数据库中查找，效率更高。但该数据库默认一天更新一次，最近新建文件无法找到，可用如下指令更新该数据库<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo updatedb</span><br></pre></td></tr></table></figure></li>
-<li>全面搜索正则表达式<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep # waiting...</span><br></pre></td></tr></table></figure>
-<h3 id="ssh密钥生成"><a href="#ssh密钥生成" class="headerlink" title="ssh密钥生成"></a>ssh密钥生成</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<li>全面搜索正则表达式<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep # waiting...</span><br></pre></td></tr></table></figure>
+<h3 id="ssh密钥生成"><a href="#ssh密钥生成" class="headerlink" title="ssh密钥生成"></a>ssh密钥生成</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
 生成的密钥存放在<code>~/.ssh</code>文件夹下。<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3></li>
 </ul>
 <p>watch 提供了周期性的方式执行给定的命令的功能。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch -n 1 nvidia-smi # 每隔一1秒查看一次显存信息</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ watch -n 1 nvidia-smi # 每隔一1秒查看一次显存信息</span><br></pre></td></tr></table></figure>
+<h3 id="磁盘大小统计"><a href="#磁盘大小统计" class="headerlink" title="磁盘大小统计"></a>磁盘大小统计</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ df -h # 统计磁盘分区大小和使用情况</span><br><span class="line">$ du -sh # 统计当前目录大小</span><br></pre></td></tr></table></figure>
 
           
         
