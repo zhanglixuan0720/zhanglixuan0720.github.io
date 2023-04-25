@@ -261,6 +261,171 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2023/04/25/linux-icon/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lixuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2023/04/25/linux-icon/" itemprop="url">linux 常见符号释意</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-04-25T08:57:32+08:00">
+                2023-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">软件使用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文记录了一些Linux常见符号的释意，用于记录和备忘。</p>
+<h2 id="符号"><a href="#符号" class="headerlink" title="符号"></a>符号</h2><h3 id="文件颜色"><a href="#文件颜色" class="headerlink" title="文件颜色"></a>文件颜色</h3><p>使用<code>ls</code>指令时返回的文件目录通常有不同颜色，表示文件的类型。</p>
+<table>
+<thead>
+<tr>
+<th>颜色</th>
+<th>白色</th>
+<th>蓝色</th>
+<th>浅蓝色</th>
+<th>绿色</th>
+<th>黄色</th>
+<th>红色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>含义</td>
+<td>普通文件</td>
+<td>文件夹</td>
+<td>链接文件</td>
+<td>可执行文件</td>
+<td>设备文件</td>
+<td>压缩文件</td>
+</tr>
+</tbody></table>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2023/03/20/git-command/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -815,7 +980,7 @@
 <h3 id="zip-压缩-解压缩文件"><a href="#zip-压缩-解压缩文件" class="headerlink" title="zip 压缩/解压缩文件"></a>zip 压缩/解压缩文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ zip -r filename.zip filename filedir/ # 压缩指定文件和文件目录</span><br><span class="line">$ zip -d filename.zip filename # 从指定压缩包中删除指定文件</span><br><span class="line">$ zip -u filename.zip filename # 追加指定文件到指定压缩包中</span><br><span class="line">$ zip -f filename.zip filename # 更新指定压缩包中指定文件</span><br><span class="line">$ zip -e filename.zip filename # 加密压缩文件，密码会提示输入</span><br><span class="line">$ unzip filename.zip -d filedir # 解压缩文件到指定目录</span><br><span class="line">$ unzip -o filename.zip # 不必询问用户，unzip后覆盖原有的文件</span><br><span class="line">$ unzip -t filename.zip # 检查压缩文件是否正确</span><br><span class="line">$ unzip -l filename.zip # 显示压缩文件内所包含的文件</span><br></pre></td></tr></table></figure>
 <h3 id="tar-压缩-解压缩文件"><a href="#tar-压缩-解压缩文件" class="headerlink" title="tar 压缩/解压缩文件"></a>tar 压缩/解压缩文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tar -zcvf filename.tar.gz filename # 压缩指定文件或文件目录</span><br><span class="line">$ tar -zxvf filename.tar.gz -C filedir # 解压缩文件到指定目录</span><br></pre></td></tr></table></figure>
 <p>常用参数选项</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-z --gzip, --gunzip, --ungzip   ：通过 gzip 来归档压缩，压缩后的文件为*.tar.gz</span><br><span class="line">-j --bzip2                      ：通过 bzip2 来归档压缩文件，压缩后的文件为*.tar.bz2</span><br><span class="line">-J			        : 通过 xz 压缩工具归档压缩文件，压缩后的文件为*.tar.xz，压缩率最高，也最慢</span><br><span class="line">-c --create			：创建新的归档文件，压缩文件</span><br><span class="line">-x --extract		        ：解压文件</span><br><span class="line">-v --verbose 		        ：可视化，显示tar处理文件的输出信息</span><br><span class="line">-f --file 			：要操作的文件名</span><br><span class="line">-t --list 			：查看文件中的内容</span><br><span class="line">-C --directory=DIR              ：解压文件至指定的目录</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-z --gzip, --gunzip, --ungzip   ：通过 gzip 来归档压缩，压缩后的文件为*.tar.gz</span><br><span class="line">-j --bzip2                      ：通过 bzip2 来归档压缩文件，压缩后的文件为*.tar.bz2</span><br><span class="line">-J			        : 通过 xz 压缩工具归档压缩文件，压缩后的文件为*.tar.xz，压缩率最高，也最慢</span><br><span class="line">-c --create			：创建新的归档文件，压缩文件</span><br><span class="line">-x --extract		        ：解压文件</span><br><span class="line">-v --verbose 		        ：可视化，显示tar处理文件的输出信息</span><br><span class="line">-f --file 			：要操作的文件名</span><br><span class="line">-t --list 			：查看文件中的内容</span><br><span class="line">-C --directory=DIR              ：解压文件至指定的目录</span><br><span class="line">--exclude=DIR                   ：压缩时排除某目录/文件</span><br></pre></td></tr></table></figure>
 <h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ps aux|grep python # 显示所有与python相关的进程</span><br></pre></td></tr></table></figure>
 <p>ps常用参数选项</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-a 显示现行终端机下的所有程序，包括其他用户的程序</span><br><span class="line">-A 显示所有程序</span><br><span class="line">-u 以用户为主的格式来显示进程状况</span><br><span class="line">-x 显示所有进程，不以终端机来区</span><br><span class="line">-H 显示树状结构，表示进程间的关系</span><br><span class="line">-f 用ASCII字符显示树状结构，表示进程间的关系</span><br></pre></td></tr></table></figure>
@@ -2035,7 +2200,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
