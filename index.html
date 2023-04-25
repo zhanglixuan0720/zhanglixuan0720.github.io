@@ -1000,6 +1000,9 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ watch -n 1 nvidia-smi # 每隔一1秒查看一次显存信息</span><br></pre></td></tr></table></figure>
 <h3 id="磁盘大小统计"><a href="#磁盘大小统计" class="headerlink" title="磁盘大小统计"></a>磁盘大小统计</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ df -h # 统计磁盘分区大小和使用情况</span><br><span class="line">$ du -sh # 统计当前目录大小</span><br></pre></td></tr></table></figure>
 
+<h3 id="建立软链接"><a href="#建立软链接" class="headerlink" title="建立软链接"></a>建立软链接</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ln -s source target-symbol # 将source 软连接到target-symbol目录下/target-symbol文件</span><br></pre></td></tr></table></figure>
+<p>注：使用target-symbol软链接时，若出现报错<code>Too many levels of symbolic links</code>，将source和target-symbol改为绝对路径即可。</p>
+
           
         
       
