@@ -87,7 +87,7 @@
 <meta property="og:description" content="前言本文记录了一些Linux指令，用于备忘和查找，无序排列。 指令查看系统内核版本（多条可用指令）12$ cat &#x2F;proc&#x2F;version$ uname -srm 在本地和远程之间复制文件12$ scp username@servername:&#x2F;path&#x2F;filename local_dir # 从远程机器下载文件$ scp &#x2F;local_path&#x2F;filename username@serve">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-03-07T13:25:55.000Z">
-<meta property="article:modified_time" content="2023-04-25T12:07:37.106Z">
+<meta property="article:modified_time" content="2023-04-30T16:35:37.270Z">
 <meta property="article:author" content="Lixuan Zhang">
 <meta property="article:tag" content="Ubuntu">
 <meta property="article:tag" content="Linux">
@@ -373,7 +373,8 @@
 fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-name s     #寻找文件名带s的文件</span><br><span class="line">-name *s    #寻找以s结尾的文件</span><br><span class="line">-name s*    #寻找以s开头的文件</span><br><span class="line">find -amin 10  #寻找过去10分钟访问过的文件</span><br><span class="line">find -mtime 1  #寻找过去24小时修改过的文件</span><br></pre></td></tr></table></figure></li>
 <li>locate<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ locate filename # 定位文件位置</span><br></pre></td></tr></table></figure>
 该方法从Linux文件数据库中查找，效率更高。但该数据库默认一天更新一次，最近新建文件无法找到，可用如下指令更新该数据库<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo updatedb</span><br></pre></td></tr></table></figure></li>
-<li>全面搜索正则表达式<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep # waiting...</span><br></pre></td></tr></table></figure>
+<li>全面搜索正则表达式<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ grep xxx # 在输出中查找带有xxx的行</span><br><span class="line">$ grep -v xxx # 滤掉输出中带有xxx的行</span><br></pre></td></tr></table></figure></li>
+<li>全面搜索正则表达式配合使用的指令<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cut -c 9-16 # 在输出的每行中选取9到16行（不包含第16行）返回</span><br></pre></td></tr></table></figure>
 <h3 id="ssh密钥生成"><a href="#ssh密钥生成" class="headerlink" title="ssh密钥生成"></a>ssh密钥生成</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
 生成的密钥存放在<code>~/.ssh</code>文件夹下。<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3></li>
 </ul>
