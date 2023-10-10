@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Ubuntu,软件配置,Realsense," />
+  <meta name="keywords" content="Ubuntu,软件配置,ROS2,机器人," />
 
 
 
@@ -79,19 +79,20 @@
 
 
 
-<meta name="description" content="前言使用内核较新的Ubuntu系统时，常常没有支持的二进制可下载SDK，因此需要从源码编译安装Realsense SDK2.0，虽然Realsense官方给出的安装流程已经很全面，但在实际操作时，仍然有一些问题，因此需要该文档。 本文主要目的是辅助从源码编译安装Realsense SDK2.0，但仍然加入了下载Realsense-ROS-Wapper的步骤，使用该文档可同时完成 Realsense">
+<meta name="description" content="前言ROS2 是新一代机器人操作系统，可以适配如Windows, Ubuntu多种计算机操作系统。本文基于Ubuntu 20.04，采用apt安装。 教程 参考创客智造安装。  在添加ros源步骤，使用清华ROS2源，选择Ubuntu 20.04系统。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从源码编译安装Realsense SDK 2.0">
-<meta property="og:url" content="https://zhanglixuan0720.github.io/2023/03/07/install-realsense-sdk/index.html">
+<meta property="og:title" content="ROS安装简要">
+<meta property="og:url" content="https://zhanglixuan0720.github.io/2023/03/17/install-ros2/index.html">
 <meta property="og:site_name" content="Lixuan&#39;s Blog">
-<meta property="og:description" content="前言使用内核较新的Ubuntu系统时，常常没有支持的二进制可下载SDK，因此需要从源码编译安装Realsense SDK2.0，虽然Realsense官方给出的安装流程已经很全面，但在实际操作时，仍然有一些问题，因此需要该文档。 本文主要目的是辅助从源码编译安装Realsense SDK2.0，但仍然加入了下载Realsense-ROS-Wapper的步骤，使用该文档可同时完成 Realsense">
+<meta property="og:description" content="前言ROS2 是新一代机器人操作系统，可以适配如Windows, Ubuntu多种计算机操作系统。本文基于Ubuntu 20.04，采用apt安装。 教程 参考创客智造安装。  在添加ros源步骤，使用清华ROS2源，选择Ubuntu 20.04系统。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-03-07T12:54:42.000Z">
-<meta property="article:modified_time" content="2023-03-07T13:50:26.714Z">
+<meta property="article:published_time" content="2023-03-17T02:36:51.000Z">
+<meta property="article:modified_time" content="2023-10-07T11:44:24.306Z">
 <meta property="article:author" content="Lixuan Zhang">
 <meta property="article:tag" content="Ubuntu">
 <meta property="article:tag" content="软件配置">
-<meta property="article:tag" content="Realsense">
+<meta property="article:tag" content="ROS2">
+<meta property="article:tag" content="机器人">
 <meta name="twitter:card" content="summary">
 
 
@@ -122,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://zhanglixuan0720.github.io/2023/03/07/install-realsense-sdk/"/>
+  <link rel="canonical" href="https://zhanglixuan0720.github.io/2023/03/17/install-ros2/"/>
 
 
 
 
 
-  <title>从源码编译安装Realsense SDK 2.0 | Lixuan's Blog</title>
+  <title>ROS安装简要 | Lixuan's Blog</title>
   
 
 
@@ -265,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2023/03/07/install-realsense-sdk/">
+    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2023/03/17/install-ros2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -282,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">从源码编译安装Realsense SDK 2.0</h1>
+          <h1 class="post-title" itemprop="name headline">ROS安装简要</h1>
         
 
         <div class="post-meta">
@@ -294,8 +295,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-03-07T20:54:42+08:00">
-                2023-03-07
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-03-17T10:36:51+08:00">
+                2023-03-17
               </time>
             
 
@@ -354,26 +355,13 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>使用内核较新的Ubuntu系统时，常常没有支持的二进制可下载SDK，因此需要从源码编译安装Realsense SDK2.0，虽然Realsense官方给出的安装流程已经很全面，但在实际操作时，仍然有一些问题，因此需要该文档。</p>
-<p>本文主要目的是辅助从源码编译安装Realsense SDK2.0，但仍然加入了下载Realsense-ROS-Wapper的步骤，使用该文档可同时完成 Realsense-SDK (from source) 和 Realsense-ROS-Wapper (from bin) 的下载配置。</p>
-<p>本文面向Ubuntu系统，测试系统为x86架构64位系统，内核版本为5.15.0-67-generic。</p>
-<h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><ol>
-<li><p>以二进制形式下载Realsense-ROS-Wapper</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install ros-$ROS_DISTRO-realsense2-camera</span><br><span class="line">$ sudo apt install ros-$ROS_DISTRO-realsense2-description</span><br></pre></td></tr></table></figure>
-<p>在<a target="_blank" rel="noopener" href="https://github.com/IntelRealSense/realsense-ros/tree/ros1-legacy">Realsense-ROS-Wapper</a>中介绍了 Method 1: The ROS distribution，可以以二进制方式下载Realsense-ROS-Wapper，但下载后一般无法正常使用，仍然需要下载Realsense SDK 2.0。Method 2: The RealSense™ distribution - Step1 介绍了如何安装Realsense SDK 2.0，但对于新版本的Ubuntu，一般无法成功，需要从源码安装。从源码安装的参考页面为<a target="_blank" rel="noopener" href="https://github.com/IntelRealSense/librealsense/blob/master/doc/installation.md">the instructions under Linux Installation</a>，下文将基于该页面进行。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>ROS2 是新一代机器人操作系统，可以适配如Windows, Ubuntu多种计算机操作系统。<br>本文基于Ubuntu 20.04，采用apt安装。</p>
+<h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><ol>
+<li><p>参考<a target="_blank" rel="noopener" href="https://www.ncnynl.com/archives/201802/2278.html">创客智造</a>安装。</p>
 </li>
-<li><p>下载Realsense SDK 2.0源码<br>从GitHub下载Realsense SDK 2.0。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/IntelRealSense/librealsense.git</span><br></pre></td></tr></table></figure></li>
-<li><p>进入 librealsense 目录，执行命令，这一步及后续步骤中，系统不能接入摄像头。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ cd librealsense</span><br><span class="line">$ sudo apt install git libssl-dev libusb-1.0-0-dev libudev-dev pkg-config libgtk-3-dev</span><br><span class="line">$ sudo apt install libglfw3-dev libgl1-mesa-dev libglu1-mesa-dev at</span><br><span class="line">$ ./scripts/setup_udev_rules.sh</span><br><span class="line">$ ./scripts/patch-realsense-ubuntu-lts-hwe.sh # Build and apply patched kernel module</span><br><span class="line">$ echo &#x27;hid_sensor_custom&#x27; | sudo tee -a /etc/modules</span><br></pre></td></tr></table></figure></li>
-<li><p>编译Realsense SDK 2.0</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir build &amp;&amp; cd build</span><br><span class="line">$ cmake ../ -DFORCE_RSUSB_BACKEND=true -DCMAKE_BUILD_TYPE=release -DBUILD_EXAMPLES=true -DBUILD_GRAPHICAL_EXAMPLES=true</span><br><span class="line">$ sudo make uninstall &amp;&amp; make clean &amp;&amp; make &amp;&amp; sudo make install</span><br></pre></td></tr></table></figure></li>
-<li><p>检查安装效果</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ realsense-viewer</span><br></pre></td></tr></table></figure>
-<p>如出现GUI框，并且接入摄像头后可以正常使用，证明安装成功。</p>
+<li><p>在添加ros源步骤，使用<a target="_blank" rel="noopener" href="https://mirrors4.tuna.tsinghua.edu.cn/help/ros2/">清华ROS2源</a>，选择Ubuntu 20.04系统。</p>
 </li>
 </ol>
-<h2 id="realsense-参数配置"><a href="#realsense-参数配置" class="headerlink" title="realsense 参数配置"></a>realsense 参数配置</h2><p>待扩充…</p>
 
       
     </div>
@@ -395,7 +383,9 @@
           
             <a href="/tags/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE/" rel="tag"># 软件配置</a>
           
-            <a href="/tags/Realsense/" rel="tag"># Realsense</a>
+            <a href="/tags/ROS2/" rel="tag"># ROS2</a>
+          
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/" rel="tag"># 机器人</a>
           
         </div>
       
@@ -408,8 +398,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2023/03/07/install-anaconda/" rel="next" title="下载和安装Anaconda">
-                <i class="fa fa-chevron-left"></i> 下载和安装Anaconda
+              <a href="/2023/03/17/linux-tools/" rel="next" title="Linux 常用工具">
+                <i class="fa fa-chevron-left"></i> Linux 常用工具
               </a>
             
           </div>
@@ -418,8 +408,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2023/03/07/linux-command/" rel="prev" title="Linux 常用指令">
-                Linux 常用指令 <i class="fa fa-chevron-right"></i>
+              <a href="/2023/03/17/install-nginx/" rel="prev" title="Nginx的下载与配置">
+                Nginx的下载与配置 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -572,7 +562,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">下载安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#realsense-%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">realsense 参数配置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%99%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">教程</span></a></li></ol></div>
             
 
           </div>
