@@ -1436,6 +1436,11 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
 <h3 id="建立软链接"><a href="#建立软链接" class="headerlink" title="建立软链接"></a>建立软链接</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ln -s source target-symbol # 将source 软连接到target-symbol目录下/target-symbol文件</span><br></pre></td></tr></table></figure>
 <p>注：使用target-symbol软链接时，若出现报错<code>Too many levels of symbolic links</code>，将source和target-symbol改为绝对路径即可。</p>
 <h3 id="文件查看"><a href="#文件查看" class="headerlink" title="文件查看"></a>文件查看</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls|wc –l # 查看当前目录文件数量</span><br><span class="line">$ ls -hl filename # 查看文件详细信息，大小换成用户可读单位</span><br></pre></td></tr></table></figure>
+
+<h3 id="命令二次解释"><a href="#命令二次解释" class="headerlink" title="命令二次解释"></a>命令二次解释</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ eval command_with_param # 将参数连接在一起构造指令，并执行</span><br></pre></td></tr></table></figure>
+<p>例如：<code>eval echo &#39;$&#39;$#</code> 会先将 指令翻译为<code>echo $&#123;param_num&#125;</code>，然后执行指令<code>echo $&#123;param_num&#125;</code>。</p>
+<h3 id="Bash-x-含义"><a href="#Bash-x-含义" class="headerlink" title="Bash $+x 含义"></a>Bash $+x 含义</h3><p>此处方便起见，省去代表bash指令的<code>$</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$0 # 执行脚本的文件名</span><br><span class="line">$&#123;number&gt;=1&#125; # 脚本的第 number 个参数 </span><br><span class="line">$# # 传入脚本的参数个数</span><br><span class="line">$@ # 传入脚本的所有参数，不包括$0表示的文件名，得到一个字符串数组</span><br><span class="line">$* # 传入脚本的所有参数，不包括$0表示的文件名，合并成一个字符串</span><br><span class="line">$? # 执行脚本的返回值，没有主动exit/return时，默认返回0</span><br></pre></td></tr></table></figure>
           
         
       
