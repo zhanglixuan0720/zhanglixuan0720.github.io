@@ -261,6 +261,325 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2023/10/11/model-storage-format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lixuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2023/10/11/model-storage-format/" itemprop="url">深度学习模型存储格式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-10-11T16:20:55+08:00">
+                2023-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">数据格式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文记录出行在深度学习中的各类模型存储格式，不定期持续更新。</p>
+<h2 id="存储格式"><a href="#存储格式" class="headerlink" title="存储格式"></a>存储格式</h2><h3 id="PyTorch-pth-pt-pkl-pth-tar"><a href="#PyTorch-pth-pt-pkl-pth-tar" class="headerlink" title="PyTorch .pth/.pt/.pkl/.pth.tar"></a>PyTorch .pth/.pt/.pkl/.pth.tar</h3><p>二进制文件，用于保存模型参数，后缀不同在保存上并没有区别。</p>
+<p>模型保存</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model_saver = &#123;<span class="string">&#x27;model&#x27;</span>:model.state_dict()&#125; <span class="comment"># 也可以添加其他项目，如epoch，optimizer, scheduler</span></span><br><span class="line"><span class="comment"># model_saver.update(&#123;&#x27;epoch&#x27;:10&#125;)</span></span><br><span class="line">torch.save(model_saver,<span class="string">&#x27;storage_name.pth&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>模型读取</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model_saver = torch.load(<span class="string">&#x27;storage_name.pth&#x27;</span>)</span><br><span class="line">model = NNModel(*args, **kwargs) <span class="comment"># 初始化模型</span></span><br><span class="line">model.load_state_dict(model_saver[<span class="string">&#x27;model&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>也可以直接保存<code>model.state_dict()</code>而不是字典。这样在读取时，也不需要用键在字典中查询。</p>
+<p>也可以直接保存整个模型，这样不用重新初始化模型，但会占用更多存储，增加读取时间。</p>
+<p>模型保存</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model,<span class="string">&#x27;storage_name.pt&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>模型读取</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model = torch.load(<span class="string">&#x27;storage_name.pt&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="ONNX"><a href="#ONNX" class="headerlink" title="ONNX"></a>ONNX</h3><p><a target="_blank" rel="noopener" href="https://onnx.ai/">ONNX</a>(Open Neural Network Exchange)开放式神经网络交换格式，用于统一多种训练框架导出的模型，如PyTorch，TensorFlow，Scikit-learn。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2023/10/11/python-log/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lixuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2023/10/11/python-log/" itemprop="url">Python 使用记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-10-11T11:18:01+08:00">
+                2023-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">软件使用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文记录Python相关的一些用法，随机记录。</p>
+<h2 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h2><h3 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install -qqq xxx <span class="comment"># 1个q: 只显示警告、错误、关键日志信息；2个q: 只显示错误、关键日志信息 ；3个q: 只关键日志信息</span></span><br><span class="line">pip install -r requirement.txt <span class="comment"># 从依赖文件下载安装包</span></span><br><span class="line">pip install --upgrade xxx <span class="comment"># 更新过期的第三方库</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">r&#x27;D:\xxx\yyy\zzz.py&#x27;</span> <span class="comment"># 防止 &#x27;\&#x27; 被Python转义。此处如无r，则需要使用 &#x27;/&#x27; 才能被识别为正确路径</span></span><br><span class="line"><span class="string">f&#x27;<span class="subst">&#123;name&#125;</span> is doing <span class="subst">&#123;event&#125;</span>&#x27;</span> <span class="comment"># 使用格式化字符（f-string）方式定义字符。</span></span><br><span class="line"><span class="string">&#x27;&#123;&#125; is doing &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(name,event) <span class="comment"># 类似于格式化字符的用法</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="星号用法"><a href="#星号用法" class="headerlink" title="星号用法"></a>星号用法</h3><h4 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a * b  <span class="comment"># 乘法</span></span><br><span class="line">a ** b <span class="comment">#幂次</span></span><br></pre></td></tr></table></figure>
+<h4 id="形式参数、"><a href="#形式参数、" class="headerlink" title="形式参数、"></a>形式参数、</h4><p>单星号：接受任意多个非关键字参数，解析为元组形式，例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">function</span>(<span class="params">*arg_tuple</span>) </span><br><span class="line"><span class="comment"># function(1,2,3) -&gt; arg_tuple = (1,2,3)</span></span><br></pre></td></tr></table></figure>
+
+<p>双星号：接受任意多个关键字参数，解析为字典形式，例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">function</span>(<span class="params">**arg_dict</span>) <span class="comment"># </span></span><br><span class="line"><span class="comment"># function(a = 1, b = 2, c = 3) -&gt; arg_dict = &#123;&#x27;a&#x27;:1, &#x27;b&#x27;:2, &#x27;c&#x27;:3&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="实际参数"><a href="#实际参数" class="headerlink" title="实际参数"></a>实际参数</h4><p>单星号：将元组/列表变量拆分为多个单元素传入函数，例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">function</span>(<span class="params">a, b, c</span>) </span><br><span class="line">x = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">function(*x)</span><br></pre></td></tr></table></figure>
+
+<p>双星号：将字典变量拆分为多个键值对传入函数，例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">function</span>(<span class="params">a, b, c</span>) </span><br><span class="line">x = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>, <span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>, <span class="string">&#x27;c&#x27;</span>:<span class="number">3</span>&#125;</span><br><span class="line">function(**x)</span><br></pre></td></tr></table></figure>
+
+<h3 id="内置库"><a href="#内置库" class="headerlink" title="内置库"></a>内置库</h3><h4 id="pathlib"><a href="#pathlib" class="headerlink" title="pathlib"></a><a target="_blank" rel="noopener" href="https://docs.python.org/3/contents.html">pathlib</a></h4><p>面向对象的文件系统路径管理库，用于跨平台的文件路径管理和文件操作。基础用法可参考<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/475661402">Python路径操作模块pathlib</a>。</p>
+<h4 id="shutil"><a href="#shutil" class="headerlink" title="shutil"></a><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/shutil.html">shutil</a></h4><p>高阶文件操作库，用于复制、移动、删除文件和创建、解压压缩包。简单用法可参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ltkekeli1229/p/15709414.html">shutil模块详解</a>。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2023/10/10/hydra-log/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2642,7 +2961,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2664,7 +2983,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
