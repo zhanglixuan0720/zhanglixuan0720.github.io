@@ -537,9 +537,10 @@
 <p>示例中，会自动生成 <code>__init__(x,y,...)</code>，执行完<code>__init__</code>后会执行<code>__post_init__</code>作为对<code>__init__</code>的补充。其中类型提示是弱提示，在运行过程中，会根据实际类型自动适应。</p>
 <p>在使用类型注解时，可能会出现，类型注解部分解析过早，但类还未创建完成，导致<code>NameError: name &#39;ClassName&#39; is not defined</code>错误。在脚本前面加入下述语句，可以延迟类型注解。防止该问题发生。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> annotations</span><br></pre></td></tr></table></figure>
-
+<h3 id="内置方法"><a href="#内置方法" class="headerlink" title="内置方法"></a>内置方法</h3><h4 id="slots"><a href="#slots" class="headerlink" title="slots"></a><strong>slots</strong></h4><p>对class中<code>__slots__</code>赋值定义可以限制class允许添加的属性。</p>
 <h3 id="内置库"><a href="#内置库" class="headerlink" title="内置库"></a>内置库</h3><h4 id="pathlib"><a href="#pathlib" class="headerlink" title="pathlib"></a><a target="_blank" rel="noopener" href="https://docs.python.org/3/contents.html">pathlib</a></h4><p>面向对象的文件系统路径管理库，用于跨平台的文件路径管理和文件操作。基础用法可参考<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/475661402">Python路径操作模块pathlib</a>。</p>
 <h4 id="shutil"><a href="#shutil" class="headerlink" title="shutil"></a><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/shutil.html">shutil</a></h4><p>高阶文件操作库，用于复制、移动、删除文件和创建、解压压缩包。简单用法可参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ltkekeli1229/p/15709414.html">shutil模块详解</a>。</p>
+<h4 id="multiprocessing"><a href="#multiprocessing" class="headerlink" title="multiprocessing"></a><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/multiprocessing.html">multiprocessing</a></h4><p>多进程操作库，用于多进程创建、通信、互斥和关闭。简单用法可参考<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/604064435">Python多进程初探–multiprocessing 模块</a></p>
 
           
         
