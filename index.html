@@ -401,6 +401,11 @@
 <p>A: 联系服务器管理员，下载<code>libomp5</code>。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install libomp5</span><br></pre></td></tr></table></figure>
 
+<p>Q: 在运行<code>./CarlaUE4.sh</code>时出现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MESA-INTEL: warning: Performance support disabled, consider sysctl dev.i915.perf_stream_paranoid=0 ../src/intel/isl/isl.c:2105: FINISHME: ../src/intel/isl/isl.c:isl_surf_supports_ccs: CCS for 3D textures is disabled, but a workaround is available.</span><br></pre></td></tr></table></figure>
+<p>A: 添加<code>VK_ICD_FILENAMES</code>到<code>~/.bashrc</code>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export VK_ICD_FILENAMES=&quot;/usr/share/vulkan/icd.d/nvidia_icd.json&quot;</span><br></pre></td></tr></table></figure>
+
 <h4 id="Ubuntu-16-04"><a href="#Ubuntu-16-04" class="headerlink" title="Ubuntu 16.04"></a>Ubuntu 16.04</h4><p>Q: 安装与Ubuntu 20.04相似的方式安装，在运行<code>./CarlaUE4.sh</code>时出现</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.27&#x27; not found</span><br></pre></td></tr></table></figure>
 <p>A: 暂无好的解决方案，Ubuntu 16.04的glibc版本为2.23，建议切换到Ubuntu 18.04/Ubuntu 20.04。文章这里下载<a target="_blank" rel="noopener" href="https://ftp.gnu.org/gnu/glibc/glibc-2.27.tar.gz">glibc-2.27源码</a>编译后，没能运行成功，而且Ubuntu的Shell指令如<code>ls</code>也崩溃了。</p>

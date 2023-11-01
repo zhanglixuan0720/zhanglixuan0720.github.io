@@ -87,7 +87,7 @@
 <meta property="og:description" content="前言CARLA是Nvidia开发的一款面向自动驾驶的模拟器，本文记录在Ubuntu服务器上安装CARLA模拟器的流程，文章在Ubuntu 20.04和Ubuntu 16.04上实验，安装CARLA 0.9.14版本。 CARLA for Ubuntu 20.04官方的下载安装教程可以参考Quick start package installation，本文对该教程进行复述，附带部分遇到的问题和解决">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-31T02:56:30.000Z">
-<meta property="article:modified_time" content="2023-10-31T07:02:26.538Z">
+<meta property="article:modified_time" content="2023-11-01T09:28:51.970Z">
 <meta property="article:author" content="Lixuan Zhang">
 <meta property="article:tag" content="Ubuntu">
 <meta property="article:tag" content="安装配置">
@@ -400,6 +400,11 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error while loading shared libraries: libomp.so.5: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
 <p>A: 联系服务器管理员，下载<code>libomp5</code>。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install libomp5</span><br></pre></td></tr></table></figure>
+
+<p>Q: 在运行<code>./CarlaUE4.sh</code>时出现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MESA-INTEL: warning: Performance support disabled, consider sysctl dev.i915.perf_stream_paranoid=0 ../src/intel/isl/isl.c:2105: FINISHME: ../src/intel/isl/isl.c:isl_surf_supports_ccs: CCS for 3D textures is disabled, but a workaround is available.</span><br></pre></td></tr></table></figure>
+<p>A: 添加<code>VK_ICD_FILENAMES</code>到<code>~/.bashrc</code>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export VK_ICD_FILENAMES=&quot;/usr/share/vulkan/icd.d/nvidia_icd.json&quot;</span><br></pre></td></tr></table></figure>
 
 <h4 id="Ubuntu-16-04"><a href="#Ubuntu-16-04" class="headerlink" title="Ubuntu 16.04"></a>Ubuntu 16.04</h4><p>Q: 安装与Ubuntu 20.04相似的方式安装，在运行<code>./CarlaUE4.sh</code>时出现</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/lib/x86_64-linux-gnu/libm.so.6: version `GLIBC_2.27&#x27; not found</span><br></pre></td></tr></table></figure>
