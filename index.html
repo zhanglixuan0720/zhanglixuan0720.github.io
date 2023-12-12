@@ -1990,6 +1990,10 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
 <p>例如：<code>eval echo &#39;$&#39;$#</code> 会先将 指令翻译为<code>echo $&#123;param_num&#125;</code>，然后执行指令<code>echo $&#123;param_num&#125;</code>。</p>
 <h3 id="Bash-x-含义"><a href="#Bash-x-含义" class="headerlink" title="Bash $+x 含义"></a>Bash $+x 含义</h3><p>此处方便起见，省去代表bash指令的<code>$</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$0 # 执行脚本的文件名</span><br><span class="line">$&#123;number&gt;=1&#125; # 脚本的第 number 个参数 </span><br><span class="line">$# # 传入脚本的参数个数</span><br><span class="line">$@ # 传入脚本的所有参数，不包括$0表示的文件名，得到一个字符串数组</span><br><span class="line">$* # 传入脚本的所有参数，不包括$0表示的文件名，合并成一个字符串</span><br><span class="line">$? # 执行脚本的返回值，没有主动exit/return时，默认返回0</span><br></pre></td></tr></table></figure>
+
+<h3 id="指令用例"><a href="#指令用例" class="headerlink" title="指令用例"></a>指令用例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux ls | grep -oP &#x27;^\S+&#x27; | grep wm | sed &#x27;s/://g&#x27; | xargs -I &#123;&#125; tmux kill-session -t &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>提取tmux中以wm开头的会话名称，并kill这些会话。</p>
+
           
         
       
