@@ -2321,6 +2321,14 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
 <li>下载和管理package<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pip install pkg_name==&lt;版本号&gt; # 安装指定版本的Python库，去掉版本号会安装最新的包</span><br><span class="line">pip install -r requirements.txt # 从依赖文件安装Python库</span><br><span class="line">pip unistall pkg_name # 卸载指定Python库</span><br><span class="line">pip show pkg_name # 显示指定Python库的信息</span><br></pre></td></tr></table></figure></li>
 <li>升级pip<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -U pip</span><br></pre></td></tr></table></figure></li>
 </ul>
+<h2 id="环境打包与迁移"><a href="#环境打包与迁移" class="headerlink" title="环境打包与迁移"></a>环境打包与迁移</h2><h3 id="conda-pack"><a href="#conda-pack" class="headerlink" title="conda-pack"></a>conda-pack</h3><ul>
+<li>打包环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install conda-pack # 下载打包软件库</span><br><span class="line">conda pack -n env_name # 打包环境（打包为env_nam.tar.gz文件）</span><br><span class="line">conda pack -n env_name --ignore-editable-packages # (Optional) 忽略可编辑的软件库。当环境存在可编辑的软件库时，常规打包指令会失败</span><br></pre></td></tr></table></figure></li>
+<li>迁移环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir env_name</span><br><span class="line">tar -xzf env_nam.tar.gz -C env_name # 解压打包后的环境</span><br><span class="line">mv env_name  ~/anaconda3/envs/ # 移动环境到anaconda目录</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="environment-yaml"><a href="#environment-yaml" class="headerlink" title="environment.yaml"></a>environment.yaml</h3><ul>
+<li>打包环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda env export &gt; environment.yml </span><br></pre></td></tr></table></figure></li>
+<li>迁移环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda env create -f environment.yml</span><br></pre></td></tr></table></figure></li>
+</ul>
 
           
         
@@ -2647,7 +2655,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
 <li><p>安装必备系统工具</p>
 </li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install ssh net-tools vim htop</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install ssh net-tools vim htop iputils-ping</span><br></pre></td></tr></table></figure>
 
 <ol start="3">
 <li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42474104/article/details/127600457">Google Pinyin</a><br>如果Ubuntu系统以英文安装，需要中文输入的用户需要下载中文字体。</p>

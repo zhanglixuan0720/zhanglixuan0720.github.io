@@ -87,7 +87,7 @@
 <meta property="og:description" content="引言Anaconda 是最常用的数据科学平台，使用 Anaconda 可以简化 Python 软件包系统管理和部署。 本文面向Ubuntu系统，测试系统为x86架构64位系统。 下载安装 从Anaconda官网下载最新版Anaconda，如，可在下载页面下载Anaconda3-2022.10-Linux-x86_64.sh。如无法打开该网页，可前往清华大学镜像下载。  在下载目录中找到.sh文件运">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-03-07T10:46:45.000Z">
-<meta property="article:modified_time" content="2023-10-07T12:11:47.224Z">
+<meta property="article:modified_time" content="2023-12-15T09:28:26.057Z">
 <meta property="article:author" content="Lixuan Zhang">
 <meta property="article:tag" content="Ubuntu">
 <meta property="article:tag" content="软件配置">
@@ -379,6 +379,14 @@
 <li>下载和管理package<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pip install pkg_name==&lt;版本号&gt; # 安装指定版本的Python库，去掉版本号会安装最新的包</span><br><span class="line">pip install -r requirements.txt # 从依赖文件安装Python库</span><br><span class="line">pip unistall pkg_name # 卸载指定Python库</span><br><span class="line">pip show pkg_name # 显示指定Python库的信息</span><br></pre></td></tr></table></figure></li>
 <li>升级pip<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -U pip</span><br></pre></td></tr></table></figure></li>
 </ul>
+<h2 id="环境打包与迁移"><a href="#环境打包与迁移" class="headerlink" title="环境打包与迁移"></a>环境打包与迁移</h2><h3 id="conda-pack"><a href="#conda-pack" class="headerlink" title="conda-pack"></a>conda-pack</h3><ul>
+<li>打包环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install conda-pack # 下载打包软件库</span><br><span class="line">conda pack -n env_name # 打包环境（打包为env_nam.tar.gz文件）</span><br><span class="line">conda pack -n env_name --ignore-editable-packages # (Optional) 忽略可编辑的软件库。当环境存在可编辑的软件库时，常规打包指令会失败</span><br></pre></td></tr></table></figure></li>
+<li>迁移环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir env_name</span><br><span class="line">tar -xzf env_nam.tar.gz -C env_name # 解压打包后的环境</span><br><span class="line">mv env_name  ~/anaconda3/envs/ # 移动环境到anaconda目录</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="environment-yaml"><a href="#environment-yaml" class="headerlink" title="environment.yaml"></a>environment.yaml</h3><ul>
+<li>打包环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda env export &gt; environment.yml </span><br></pre></td></tr></table></figure></li>
+<li>迁移环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda env create -f environment.yml</span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
     </div>
@@ -581,7 +589,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">下载安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8-conda-%E6%8C%87%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">常用 conda 指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8-pip-%E6%8C%87%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">常用 pip 指令</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">下载安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8-conda-%E6%8C%87%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">常用 conda 指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8-pip-%E6%8C%87%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">常用 pip 指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%89%93%E5%8C%85%E4%B8%8E%E8%BF%81%E7%A7%BB"><span class="nav-number">5.</span> <span class="nav-text">环境打包与迁移</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#conda-pack"><span class="nav-number">5.1.</span> <span class="nav-text">conda-pack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#environment-yaml"><span class="nav-number">5.2.</span> <span class="nav-text">environment.yaml</span></a></li></ol></li></ol></div>
             
 
           </div>
