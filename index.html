@@ -261,6 +261,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2024/01/10/config-tensorflow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lixuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/01/10/config-tensorflow/" itemprop="url">配置TensorFlow</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2024-01-10T19:48:21+08:00">
+                2024-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">安装配置</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本文记录配置中的一些小问题</p>
+<h2 id="tensorflow-tensorflow-datasets-dm-reverb版本匹配问题"><a href="#tensorflow-tensorflow-datasets-dm-reverb版本匹配问题" class="headerlink" title="tensorflow, tensorflow-datasets, dm-reverb版本匹配问题"></a>tensorflow, tensorflow-datasets, dm-reverb版本匹配问题</h2><p>tensorflow和tensorflow-datasets因不同版本依赖的protobuf版本要求不同，可能会存在冲突。</p>
+<p>dm-reverb是针对机器学习的数据存储和运输系统，与tensorflow一起使用时，强依赖于tensorflow版本，版本对应可以参考<a target="_blank" rel="noopener" href="https://github.com/google-deepmind/reverb/tree/master">Reverb</a>。</p>
+<p>一种测试好的版本配置为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tensorflow==2.12.0</span><br><span class="line">tensorflow-datasets==4.9.2</span><br><span class="line">dm-reverb==0.11.0</span><br></pre></td></tr></table></figure>
+<p>pip下载命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install tensorflow==2.12.0 tensorflow-datasets==4.9.2 dm-reverb[tensorflow]==0.11.0</span><br></pre></td></tr></table></figure>
+
+<h2 id="tensorflow-日志输出屏蔽"><a href="#tensorflow-日志输出屏蔽" class="headerlink" title="tensorflow 日志输出屏蔽"></a>tensorflow 日志输出屏蔽</h2><p>通常tensorflow会在运行时输出一系列日志，屏蔽日志的方式为在<code>import tensorflow</code>之前使用<code>os</code>包，加入TF屏蔽语句，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">os.environ[&#x27;TF_CPP_MIN_LOG_LEVEL&#x27;] = &#x27;3&#x27;</span><br><span class="line"></span><br><span class="line">import tensorflow as tf</span><br></pre></td></tr></table></figure>
+<p>其中，数字的对应关系如下所示，大数字的屏蔽内容包含小数字的屏蔽内容。<br>|Number|0|1|2|3|<br>|:—:|:—:|:—:|:—:|:—:|<br>|Log Level|INFO|WARNING|ERROR|FATAL|</p>
+<h2 id="tensorflow-CPU-运行"><a href="#tensorflow-CPU-运行" class="headerlink" title="tensorflow CPU 运行"></a>tensorflow CPU 运行</h2><p>tensorflow2的CPU和GPU版本是混合的，在加载tensorflow数据集时，会自动将数据集加载到显卡上，显卡可能会被全部占用。为了避免这个问题，可以强制tensorflow在CPU运行，这里提供两种方式：</p>
+<ol>
+<li>设置GPU对tensorflow不可见。（全局屏蔽）<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br><span class="line"></span><br><span class="line">if len(tf.config.experimental.list_physical_devices(&#x27;GPU&#x27;)) &gt; 0:</span><br><span class="line">    tf.config.experimental.set_visible_devices([], &#x27;GPU&#x27;)</span><br></pre></td></tr></table></figure></li>
+<li>设置部分代码在CPU运行。（局部屏蔽）<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">with tf.device(&#x27;cpu&#x27;):</span><br><span class="line">    # your code</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2023/10/31/install-carla/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3220,7 +3377,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -3242,7 +3399,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -3295,7 +3452,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
