@@ -87,7 +87,7 @@
 <meta property="og:description" content="本文记录配置中的一些小问题 tensorflow, tensorflow-datasets, dm-reverb版本匹配问题tensorflow和tensorflow-datasets因不同版本依赖的protobuf版本要求不同，可能会存在冲突。 dm-reverb是针对机器学习的数据存储和运输系统，与tensorflow一起使用时，强依赖于tensorflow版本，版本对应可以参考Reverb。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-01-10T11:48:21.000Z">
-<meta property="article:modified_time" content="2024-01-10T12:14:27.608Z">
+<meta property="article:modified_time" content="2024-01-10T12:22:57.182Z">
 <meta property="article:author" content="Lixuan Zhang">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="安装配置">
@@ -364,7 +364,7 @@
 
 <h2 id="tensorflow-日志输出屏蔽"><a href="#tensorflow-日志输出屏蔽" class="headerlink" title="tensorflow 日志输出屏蔽"></a>tensorflow 日志输出屏蔽</h2><p>通常tensorflow会在运行时输出一系列日志，屏蔽日志的方式为在<code>import tensorflow</code>之前使用<code>os</code>包，加入TF屏蔽语句，例如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">os.environ[&#x27;TF_CPP_MIN_LOG_LEVEL&#x27;] = &#x27;3&#x27;</span><br><span class="line"></span><br><span class="line">import tensorflow as tf</span><br></pre></td></tr></table></figure>
-<p>其中，数字的对应关系如下所示，大数字的屏蔽内容包含小数字的屏蔽内容。<br>|Number|0|1|2|3|<br>|:—:|:—:|:—:|:—:|:—:|<br>|Log Level|INFO|WARNING|ERROR|FATAL|</p>
+<p>其中，数字的对应关系如下所示，大数字的屏蔽内容包含小数字的屏蔽内容。<br>|Number|0|1|2|3|<br>|—|—|—|—|—|<br>|Log Level|INFO|WARNING|ERROR|FATAL|</p>
 <h2 id="tensorflow-CPU-运行"><a href="#tensorflow-CPU-运行" class="headerlink" title="tensorflow CPU 运行"></a>tensorflow CPU 运行</h2><p>tensorflow2的CPU和GPU版本是混合的，在加载tensorflow数据集时，会自动将数据集加载到显卡上，显卡可能会被全部占用。为了避免这个问题，可以强制tensorflow在CPU运行，这里提供两种方式：</p>
 <ol>
 <li>设置GPU对tensorflow不可见。（全局屏蔽）<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br><span class="line"></span><br><span class="line">if len(tf.config.experimental.list_physical_devices(&#x27;GPU&#x27;)) &gt; 0:</span><br><span class="line">    tf.config.experimental.set_visible_devices([], &#x27;GPU&#x27;)</span><br></pre></td></tr></table></figure></li>
