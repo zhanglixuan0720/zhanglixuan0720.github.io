@@ -261,6 +261,466 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2024/01/26/world-model-dev/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lixuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/01/26/world-model-dev/" itemprop="url">世界模型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2024-01-26T16:05:20+08:00">
+                2024-01-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%B8%96%E7%95%8C%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">世界模型</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>[待校订/修改]</p>
+<p>Yann LeCun在文章《A Path Towards Autonomous Machine Intelligence》中表达了自己关于通往智能的路径的见解和主张。在文章里，具有智能的机器被定义为：可以像人类或者动物一样，基于内部的目标做出行为，进行推理、规划。这篇文章系统性地介绍了世界模型 (World Model)在通向智能道路上的作用，世界模型面临的困难和挑战，世界模型实现框架-联合嵌入预测架构（Joint-Embedding Predictive Architecture, JEPA）和层级化JEPA（Hierarchical-JEPA, H-JEPA），如何训练基于JEPA和H-JEPA的世界模型以及一些关于世界模型的其他讨论。本文以记录这篇文章中提到的关键点为基础，重述这篇文章。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>人类或者动物具有智能的原因可能是，人类或者动物能够学习一个表示世界如何运作的世界模型。基于此，目前人工智能(Artifical Intelligence, AI)研究需要解决的三个挑战是：</p>
+<ol>
+<li>机器如何在大部分时候<em>基于观测</em>，<em>学习表示世界</em>，<em>学习预测</em>，<em>学习采取行动</em>？</li>
+<li>机器如何能够以<em>与基于梯度的学习兼容的方式，进行推理和规划</em>？</li>
+<li>机器如何学习以<em>层级化地方式</em>，在<em>多个抽象层级上</em>和<em>多个时间尺度</em>上，表示感知和行动方案。</li>
+</ol>
+<p>这三个挑战出发点和原因分别是：</p>
+<ol>
+<li>与真实世界的交互是昂贵且危险的，智能体应尽可能地从观测而不是通过与真实世界交互来学习。</li>
+<li>当前的深度学习方法主要依赖于估计和使用损失函数的梯度，基于符号的推理很难与这种方法结合起来。</li>
+<li>人类和很多动物能够进行多层次地抽象，得益于此，人类动物可以进行长期预测和规划，能够将复杂的行为分解为简单的行为。</li>
+</ol>
+<h3 id="学习世界模型"><a href="#学习世界模型" class="headerlink" title="学习世界模型"></a>学习世界模型</h3><p>人类和动物可以通过观测数据和少量任务无关的交互数据，学习大量关于世界如何运动的背景知识。基于此，文章假设：这种积累的背景知识可能是人们常说的常识(common sense)的基础。<br>这里常识可以被看作：可以告诉智能体什么是可能的，什么是合理的，什么是不可能的一组世界模型。</p>
+<p><em>Common sense can be seen as a collection of models of the world that can tell an agent what is likely, what is plausible, and what is impossible.</em></p>
+<p>常识的主要作用是预测：时间维度的预测（预测未来会发生什么）和空间维度的预测（补全空间上的缺失）。</p>
+<p>文章主张：今天人工智能和机器学习的一大挑战是设计能够让机器<em>以无监督（自监督）的方式学习</em>的世界模型的学习范式和架构。这样的世界模型可以预测、推理和规划。其中一个技术困难是：如何设计可训练，能够处理模型在预测中的不确定度的世界模型。</p>
+<h3 id="学习模型的层次化结构"><a href="#学习模型的层次化结构" class="headerlink" title="学习模型的层次化结构"></a>学习模型的层次化结构</h3><p>人和动物的学习世界模型的过程是层次化的，概念是逐渐抽象的。几个阶段可以概况为：</p>
+<ol>
+<li>世界中大量光线、声音、触觉的输入；</li>
+<li>根据双眼的视差学习到了深度、3维世界的概念；</li>
+<li>基于3维世界观察，学习到了物体的概念，物体可能会被遮挡，但不会突然出现、消失、改变形状和远程传送，同一时间只能在一个地方；</li>
+<li>基于此，可以进一步学习到物体的特性，一些物体是静止的、一些物体的轨迹是可预测的、一些物体的轨迹是不可预测的；进一步学习到了关于稳定性、重力、惯性等物理性质；</li>
+<li>在世界中具有生命的对象的作用可以进一步被用于推断因果关系；</li>
+<li>进一步获得语言和社会知识。</li>
+</ol>
+<p>基于获取到的世界知识，人类和动物可以基于内部目标和驱动，快速学习新的技能，进行预测、规划和推理。</p>
+<p>关于世界模型的数量，文章假设：人类和动物内部的世界模型可能是只有一个而不是多个，但可以根据不同的环境和任务配置其参数。</p>
+<h2 id="自主智能的模型架构"><a href="#自主智能的模型架构" class="headerlink" title="自主智能的模型架构"></a>自主智能的模型架构</h2><p>实现自主智能的架构包括：Configurator, Perception, World Model, Cost, Short-term Memory, Actor 模块，如图所示。</p>
+<div>
+<center>
+<img src="./world-model/system-architecture.png" width="75%" height="75%" />
+</center>
+</div>
+
+<p><strong>Configurator</strong>：以其他模块的输入信号作为为输入，配置其他模块的参数，以完成当前的任务。</p>
+<p><strong>Perception</strong>：接收传感器的信号作为输入，估计当前世界的状态。</p>
+<p><strong>World Model</strong>：(i)估计没有被感知提供的状态信息；(ii)预测未来可能的状态。</p>
+<p><strong>Cost</strong>：衡量智能体的”不舒服”程度，包含内部代价(Intrinsic Cost)模块和可训练评论家(Trainable Critic)模块。</p>
+<p><strong>Short-term Memory</strong>：存储世界模型的状态和相应的内部代价值。</p>
+<p><strong>Actor</strong>：计算行为(action)序列并将其输入到效应器。两种工作模式：(i)直接从世界状态和短期记忆中产生行为；(ii)类似模型预测控制(Model-predictive control, MPC)中的行为优化器。</p>
+<p>在世界状态编码的信息中，可能只有部分的信息是与当前任务相关的。因此Perception模块可以层次化地编码世界状态，Configurator模块也可以配置Perception模块的参数，只提取与当前任务相关的信息。</p>
+<p>世界模型需要能够模拟世界中<em>与当前任务相关</em>的部分，Configurator可以通过配置参数来做到这一点。世界模型需要层级化设计，以便能够在<em>多个抽象层次和时间尺度</em>上进行预测；世界模型需要能够<em>预测多个合理的世界状态</em>，并处理这些<em>世界状态的不确定性</em>。（因为世界是很多时候不是确定的。）</p>
+<p>内部代价模块是固定而不可学习的，用于衡量智能体瞬间的”不舒服”程度，是一个类似能量标量，智能体的最终目标是最小化长期运行过程中的内部代价。可训练评论家模块预测未来的能量代价，可以使用Configurator模块配置参数，使其能够反映不同任务的特性。</p>
+<h3 id="典型感知-行为循环"><a href="#典型感知-行为循环" class="headerlink" title="典型感知-行为循环"></a>典型感知-行为循环</h3><p>两种典型的感知-行为循环：(i)Mode-1，直接预测行为；(ii)Mode-2，类似MPC的最优化规划和推理范式。</p>
+<p>这里推理表示约束满足或能量最小化。很多种类的推理都可以看作能量最小化。</p>
+<h4 id="Mode-1：反应行为"><a href="#Mode-1：反应行为" class="headerlink" title="Mode-1：反应行为"></a>Mode-1：反应行为</h4><p>反应行为(Reactive Behavior)直接从世界状态和短期记忆中产生行为，用一个策略模块实现。策略模块可以由配置器调整，以适应不同的任务。<br>$$a_t = f(s_t)$$</p>
+<p>策略模块在训练时，因为代价模块是不可微的，所以状态对应的代价不能通过梯度传导到行为。在强化学习中，这一问题通过与的世界多次交互，获得不同状态的奖励/代价之间的差异来解决，但十分缓慢和危险。与世界模型交互可以解决这一问题。</p>
+<h4 id="Mode-2：使用世界模型推理和规划"><a href="#Mode-2：使用世界模型推理和规划" class="headerlink" title="Mode-2：使用世界模型推理和规划"></a>Mode-2：使用世界模型推理和规划</h4><p>使用世界模型推理和规划主要包含7个步骤：</p>
+<ol>
+<li><strong>感知</strong>：感知系统提取当前世界状态的表示。代价模块计算和存储相应状态的代价；<br>$$s_t = P(x_t)$$</li>
+<li><strong>行为提议</strong>：行为模块提出一个初始行为序列，输入世界模型中进行评估；<br>$$(a_0,a_1,…,a_t)$$</li>
+<li><strong>模拟</strong>：基于行为序列，世界模型预测一个或者多个世界状态的表示序列；<br>$$(s_0,s_1,…,s_t)$$</li>
+<li><strong>评估</strong>：基于预测的世界状态表示序列，世界模型评估每个状态序列的累积代价；<br>$$F(x)=\sum_{t=1}^TC(s_t)$$</li>
+<li><strong>规划</strong>：规划器提出一个拥有更小代价的行为序列。这一步可以通过基于梯度的手段进行。重复2-5直到收敛；<br>$$(\check{a_0},\check{a_1},…,\check{a_t})\leftarrow(a_0,a_1,…,a_t)$$</li>
+<li><strong>执行</strong>：行为模块将第一个行为或者前几个行为输入效应器，直到下一个感知-行为循环完成；</li>
+<li><strong>记忆</strong>：每一次执行行为后，状态和对应的代价（内部代价和评论家代价）被存储在短期记忆模块中，用于后续训练或更新评论家。</li>
+</ol>
+<p>针对第5步，很多策略都可以使用。当世界模型和代价模块工作良好时，基于梯度的方式是高效地。当行为到代价的映射存在不连续时（特别是，状态空间或行为空间是离散的），可以使用动态规划，组合优化，模拟退火或者其他无梯度方法，启发搜索方法（带有剪枝的树搜索）。</p>
+<p>需要注意的是：根据行为序列预测世界模型状态并不是一个确定性的过程，从一个初始状态和行为开始，可能会产生多个状态。这一点产生的原因有：世界本质上是随机的（任意地不确定性）；状态没有包含完整的世界状态信息；世界模型预测的准确性是不完美的（受限于有限的训练数据，表示能力和计算资源）。</p>
+<h4 id="从Mode-2到Mode-1：学习新技能"><a href="#从Mode-2到Mode-1：学习新技能" class="headerlink" title="从Mode-2到Mode-1：学习新技能"></a>从Mode-2到Mode-1：学习新技能</h4><p>Mode-2的推理是繁重的，需要调动整个世界模型，针对一个任务配置所有模块；而Mode-1相对高效，可以通过训练多个策略模块来同时执行多个任务。世界模型可以通过训练Mode-1中的策略模块去产生和Mode-2中推理结果近似的行为。另外，训练好的Mode-1中的策略模块，也可以为Mode-2中的推理提取初始行为序列。从Mode-2到Mode-1的学习转化可以让智能体使用全部世界模型的推理能力获取新的技能，并将其编译为更高效地Mode-1。</p>
+<h4 id="能量最小化推理"><a href="#能量最小化推理" class="headerlink" title="能量最小化推理"></a>能量最小化推理</h4><p>在Mode-2中获取一个合适的行为序列的过程可以被看作一种推理。世界模型在其中扮演了模拟器的功能，行为可以被看作一种表示状态间变化的潜变量。</p>
+<p>在AI中，很多经典的推理都可以被看作一种最优化或约束满足问题，特别是当推理在因子图或者概率图模型中进行时。文章提出的架构本质上是一种因子图模型，代价模型是对数因子。不同的是，提出的架构能够基于模拟和类比进行推理，这超出了传统的基于逻辑和概率的推理。</p>
+<h3 id="代价模块作为行为的驱动"><a href="#代价模块作为行为的驱动" class="headerlink" title="代价模块作为行为的驱动"></a>代价模块作为行为的驱动</h3><p>代价模块包括内部不可变代价(Immutable Cost, IC)和可训练代价(Trainable Cost, TC)，总的代价是这两种代价的和，每项代价可能由多个子模块给出，Configurator可以通过线性加权配置相应配置代价模块以适应不同任务。<br>$$C(s)=IC(s)+TC(s)\<br>IC(s)=\sum_{i=1}^{k}u_i IC_i(s)\<br>TC(s)=\sum_{j=1}^{l}v_j TC_j(s)$$</p>
+<p>内部不可变代价定义了智能体的基本行为本质。例如：针对机器人，这一项可以是对应本体感受器中的”痛苦”、”高兴”、”本能恐惧”，测量如：外部力负载、危险的电力、化学和热力环境，过度的能量消耗和过低的能量剩余；社交驱动，如寻求人类的陪伴、交互和赞扬反馈，发现他们疼痛难受；内部行为驱动，如好奇心，探索环境。这一部分类似哺乳动物(mammalian)大脑中的杏仁核(amygdala)。为了避免行为的坍塌或者向有害行为不可控地漂移，这一部分代价通常设定为不可变，不可学习的。</p>
+<p>可训练代价有两个作用：(i)预测长期产出；(ii)通过学习到的代价使智能体专注在某个任务上。</p>
+<p>文章总结了四种指定AI智能体行为的方式：</p>
+<ol>
+<li>当特定条件满足时，显示式激活特定行为；</li>
+<li>定义目标函数，智能体的行为是发现最小化目标函数的行为序列；</li>
+<li>有监督地训练行为模块，通过观察专家的行为，学习Mode-1行为；</li>
+<li>基于模仿学习训练行为模块，通过观察专家行为，推断使专家行为最优的目标函数，这一种方式会产生一个评论家模块，以基于Mode-2进行决策，这一过程也被称为逆强化学习(inverse reinforcement learning)。</li>
+</ol>
+<h3 id="训练评论家"><a href="#训练评论家" class="headerlink" title="训练评论家"></a>训练评论家</h3><p>训练评论家的主要流程包含：</p>
+<ol>
+<li>设计一个短期记忆模块存储三元组(time, state, intrinsic energy)：$(\tau, s_{\tau}, IC(s_{\tau}))$，用于存储和检索内部能量（通过时间或者状态）；</li>
+<li>训练一个评论家预测未来的某时刻的内部能量，或者未来能量的期望。</li>
+</ol>
+<p>这一评论家训练方法类似于强化学习中的A2C。其中短期记忆模块可以被设计为一个网络，’soft’地给予时间或者状态进行检索。</p>
+<h2 id="设计和训练世界模型"><a href="#设计和训练世界模型" class="headerlink" title="设计和训练世界模型"></a>设计和训练世界模型</h2><p>设计世界模型架构和训练范式构成下个十年迈向人工智能真正进步的主要障碍。</p>
+<p><em>designing architectures and training paradigms for the world model constitute the main obstacles towards real progress in AI over the next decades.</em></p>
+<p>训练世界模型是自监督学习的一个典型例子，其基本思想是模式补全(Pattern Recognition)。在文章提出的架构在，世界模型可以被看作预测世界状态的未来表示。训练世界模型有三个需要被解决的问题：</p>
+<ol>
+<li>世界模型的质量很大程度上取决于<strong>状态序列的多样性</strong>；<br>$$(s_t,a_t,s_{t+1})$$</li>
+<li>针对同一世界状态和行为，有<strong>多种可能的世界模型状态表示</strong>，因为世界不是完全可预测的；<br>$$s_{t+1} \sim p(s_t,a_t)$$</li>
+<li>世界模型必须能够在不同时间尺度和抽象层级上进行预测。<br>$$s_{t+\tau} \sim p(s_t,a_t)\<br>s_{t}^{i} \sim p(s_{t}^{i},a_{t}^{i})$$<br>在高抽象层级进行长期预测，在低抽象层级进行短期预测。高抽象层次目标被分解为多个子目标，在多个子目标之间产生低抽象层次行为。例如：语言（高抽象层次目标）到肌肉神经信号（低抽象层次行为）。</li>
+</ol>
+<h3 id="自监督学习"><a href="#自监督学习" class="headerlink" title="自监督学习"></a>自监督学习</h3><p>在世界模型训练中，针对同一世界状态和行为，有多种可能的世界模型状态表示，这个表示集合可能是无限大的，明确地表示无限大的预测集合可能是很难或者不可解的。而计算两个表示是否兼容是容易的。因此世界模型预训练可以被形式化为基于能量的模型(Energy-Based Models, EBM)。<br>$$\min F(x,y)$$<br>其中，$F(\cdot, \cdot)$是衡量两个表示是否兼容的能量函数。基于这种形式化，与给定$x$兼容的$y$可以是一个点，多个离散点，一个流形或者一组点和流形。</p>
+<p>世界模型学习的原则是：给定两个输入$x$和$y$，学习两个函数用于表示输入<br>$$s_x = g_x (x)\<br>s_y = g_y (y)$$<br>达成目标：(i)$s_x$和$s_y$最大限度地提供了有关$x$和$y$的信息；(ii)$s_y$可以容易地从$s_x$中预测。</p>
+<p>文章假设：通过基于自监督地从视频中学习，关于世界如何运作的抽象概念层次结构可以被学习到。</p>
+<ul>
+<li>学习从时间或空间临近区域图像中可预测的图像区域表示，学到局部边缘和轮廓信息；</li>
+<li>学习从同一场景中略有不同的视角图像中可预测的图像表示，隐式地学到深度图；</li>
+<li>辨认被遮挡的边缘，刚性物体区域的集体运动，隐式地3维物体；</li>
+<li>物体概念地表征，物体具有持久性，由于时差运动而消失在其他物体后面的物体会重新出现；</li>
+<li>物体运动的不同特性，有生命物体和无生命物体的区分；</li>
+<li>以物体为中心训练世界模型，物体运动的规律，直觉性的物理概念出现，如稳定性、重力、动量；</li>
+<li>更多高抽象层次概念。</li>
+</ul>
+<h3 id="表示不确定性"><a href="#表示不确定性" class="headerlink" title="表示不确定性"></a>表示不确定性</h3><div>
+<center>
+<img src="./world-model/lvebm.png" width="75%" height="75%" />
+</center>
+</div>
+
+<p>世界的模型的预测充满不确定性，如在车辆转弯时，向左和向右不能通过当前输入信号完全表示，需要一个指示左转或右转的变量进行确定。为了表示这种不确定性，可以在EBM中引入潜变量，成为潜变量EMB(latent-variable EBM, LVEBM)。潜变量可以解释为：</p>
+<ol>
+<li>一个被推断出来的输入变量；</li>
+<li>输入信号$x$和一组兼容信号$y$之间关系的参数化；</li>
+<li>信号$y$中，不能从信号$x$中提取到的信息的部分。<br>$$<br>\check{z} = \argmin_{z\in\mathcal{Z}}{E_w(x,y,z)} \<br>F_w(x,y)=\min_{z\in\mathcal{Z}}{E_w (x,y,z)}=E_w(x,y,\check{z})<br>$$<br>其中，从技术上来讲，$F_w(x,y)$被称为零度自由能(zero-temporature free energy)，文章后续简答地称其为能量。</li>
+</ol>
+<h3 id="训练基于能量的模型"><a href="#训练基于能量的模型" class="headerlink" title="训练基于能量的模型"></a>训练基于能量的模型</h3><p>基于能量的方法不依赖于概率建模，尽管许多EBM可以通过，例如Gibbs分布，转化为概率模型，但这并非必要。</p>
+<p>在训练EBM时，设计一个合适的损失函数是容易的，困难的点在于如何避免模型坍塌。例如：学习到的表示都是相同的，其能量函数总是为0，产生模型塌陷。</p>
+<p>4种标准的EBM模型如下图所示。</p>
+<div>
+<center>
+<img src="./world-model/ebm-architecture.png" width="100%" height="100%" />
+</center>
+</div>
+
+<p><strong>(a) Deterministic-generative Architecture</strong></p>
+<p>确定性生成模型不会产生模型塌陷。因为$D(y,\tilde{y})\geq 0, if y \neq \tilde{y}$</p>
+<p><strong>(b) Latent-variable Architecture</strong></p>
+<p>生成式潜变量架构，当潜变量的信息承载力太大时，模型会坍塌。例如：当$z$的维度和$y$一样时，模型会塌陷到在整个$y$空间中，能量都是0。</p>
+<p><strong>(c) Auto-encoder Architecture</strong></p>
+<p>自编码器架构，当表示的信息承载力太大时，模型会坍塌。例如：当表示的维度与$y$维度一致或更高时，模型会学到恒等函数，产生0的重建误差。<br>$$<br>s_y  = y \<br>\text{Dec}(s_y)=I(s_y)=y<br>$$</p>
+<p><strong>(d) Joint Embedding Architecture</strong></p>
+<p>联合嵌入架构，当学习到的嵌入信息表示能力不足时，模型会坍塌。如：模型可能会忽略输入，产生单一的编码，整个空间能量都是0。<br>$$<br>s_x = s_y<br>$$</p>
+<p><strong>避免模型坍塌的损失函数设计</strong>：(i)对比方法；(ii)正则化方法。<br>这两种方法的形象解释如下图所示。</p>
+<div>
+<center>
+<img src="./world-model/contrastive-regularized-method.png" width="100%" height="100%" />
+</center>
+</div>
+
+<p><strong>对比方法</strong></p>
+<p>对比损失函数：<br>$$<br>L(w,x,y,\hat{y}) = H(F_w(x,y),F_w(x,\hat{y}),m(y,\hat{y}))<br>$$<br>其中，当$F_w(x,\hat{y})&lt;F_w(x,y)+m(y, \hat{y})$时，<br>$$<br>\frac{\partial H}{\partial F_w(x,y)} &gt; 0\<br>\frac{\partial H}{\partial F_w(x,\hat{y})} &lt; 0<br>$$<br>一个实例化为：<br>$$<br>L(w,x,y,\hat{y}) = [F_w(x,y)-F_w(x,\hat{y})+\mu\Vert y-\hat{y} \Vert^2]^+<br>$$<br>拓展到多个对比样本<br>$$<br>L(w,x,y,\hat{y}_1,\dots,\hat{y}_k) = H(F_w(x,y),F_w(x,\hat{y}_1),F_w(x,\hat{y}_k))<br>$$<br>一个在InfoNCE中的实例化为<br>$$<br>L(w,x,y,\hat{y}_1,\dots,\hat{y}_k) = F_w(x,y) \</p>
+<ul>
+<li>\log[\exp(-F_w(x,y)) + \sum_{k=1}^{K}\exp{(-F_w(x,\hat{y}_k))}]<br>$$</li>
+</ul>
+<p>常见的对比方法有：DrLIM，PIRL，MoCO, SimCLR，CPT。对比样本采样方法有：Monte Carlo methods，Markov-Chain Monte Carlo methods，Contrastive Divergence。其他可以被看作对比的方法有：GAN，Denoising Auto-Encoders, MAE。</p>
+<p>对比方法的两个主要问题是：(i)：需要设计方案选择合适的对比样本$\hat{y}$；(ii)：当正样本$y$的维度很大时，训练可行的EBM需要大量的对比样本，以确保没有被局部正样本占据的空间保持更高的能量。因为维度诅咒，需要的对比样本数是指数增长的。</p>
+<p><strong>正则化方法</strong></p>
+<p>正则化的基本思想是：设计一组损失函数，降低训练样本集能量的同时，最小化分配到0能量的样本空间的容量。正则化方法的优势是可以避免维度诅咒，问题在于如何设计最小化能量空间的容量最小化的正则项。常见的正则项包括：稀疏建模(sparse modeling)；稀疏自编码器(sparse auto-encoder)；带有噪声潜变量的自编码器(auto-encoder with noisy latent variables)，如VAE；离散潜变量</p>
+<p>针对可能产生模型坍塌的3种标准EBM，正则化方法可以是：</p>
+<p>(b) Latent-variable Architecture：限制潜变量$z$的信息容量，离散化$z$或者降低$z$的维度。</p>
+<p>(c) Auto-encoder Architecture：限制中间表示的信息容量。</p>
+<p>(d) Joint Embedding Architecture：最大化$s_x$包含$x$的信息量和$s_y$包含$y$的信息量。</p>
+<h3 id="联合嵌入预测架构-JEPA"><a href="#联合嵌入预测架构-JEPA" class="headerlink" title="联合嵌入预测架构(JEPA)"></a>联合嵌入预测架构(JEPA)</h3><p>联合嵌入预测架构的形式化为<br>$$<br>\check{z} = \argmin_{z\in\mathcal{Z}}{E_w(x,y,z)} = \argmin_{z\in\mathcal{Z}}{D(s_y,\text{Pred}(s_x,z))} \<br>F_w(x,y)=\min_{z\in\mathcal{Z}}{E_w (x,y,z)}=D(s_y,\text{Pred}(s_x,\check{z}))<br>$$</p>
+<div>
+<center>
+<img src="./world-model/jepa.png" width="100%" height="100%" />
+</center>
+</div>
+
+<p>JEPA的主要优势是在表示空间内预测，避免了预测$y$不相关的细节。</p>
+<p>JEPA表示多个与$x$兼容的$y$的方式：(i)利用$y$编码器的不变性，多个映射到相同表示$s_y$的信号具有相同的能量；(ii)使用潜变量，表示$s_y$中$s_x$没有的信息。</p>
+<h3 id="训练JEPA"><a href="#训练JEPA" class="headerlink" title="训练JEPA"></a>训练JEPA</h3><p>成功训练JEPA的4个标准：</p>
+<ol>
+<li>最大化$s_x$关于$x$的信息内容；</li>
+<li>最大化$s_y$关于$y$的信息内容；</li>
+<li>$s_y$可以容易地从$s_x$中预测出来；</li>
+<li>最小化潜变量$z$在预测中使用的信息内容。</li>
+</ol>
+<p>针对标准1，2，充分条件是：$\text{Enc}_w(y)$是可逆的；充分必要条件是：函数$\text{Enc}_w(y)$是最小满射的，也就是映射到$s_y$的$y$的容量是最小的。</p>
+<p>标准3和标准2是对立的，需要在这两者之间保持折中。</p>
+<p>针对标准4，典型的方法有：</p>
+<ol>
+<li>离散化：VQ-VAE；</li>
+<li>降低维度/秩：Implicit Rank-Minimizing AE；</li>
+<li>稀疏化：Linear sparse modeling, LISTA, no-linear sparse modeling；</li>
+<li>模糊化/加入噪声：noisy AE, VAE。</li>
+</ol>
+<h4 id="VICReg"><a href="#VICReg" class="headerlink" title="VICReg"></a>VICReg</h4><p>为了最大化表示$s_x$包含信号$x$的信息（标准1），VICReg使用两条子标准：(i)$s_x$的分量不能是常量；(ii)$s_x$的分量需要尽可能独立。</p>
+<p>这两条子标准的实现：将表示非线性地映射到高维表示中，在高维表示中：(i)将表示中分量的标准差保持在某一阈值之上；(ii)约束表示中分量的协方差尽可能为0。</p>
+<h4 id="让JEPA学习有用的表示"><a href="#让JEPA学习有用的表示" class="headerlink" title="让JEPA学习有用的表示"></a>让JEPA学习有用的表示</h4><p>什么是可预测的，什么是不可表示的，已经被隐式地包含在编码器和预测器的架构中了。这导致了归纳偏差，决定了什么是可以被预测的，什么是不可被预测的。</p>
+<p>如果能够有一种方式，让系统学习到与任务相关的表示，将非常有用。实现这个设计，可以将$\tilde{s_y}$作为预测头的输入，预测可以从数据中得到，并且和任务相关的变量。</p>
+<h3 id="层级化-JEPA-H-JEPA"><a href="#层级化-JEPA-H-JEPA" class="headerlink" title="层级化 JEPA (H-JEPA)"></a>层级化 JEPA (H-JEPA)</h3><div>
+<center>
+<img src="./world-model/h-jepa.png" width="100%" height="100%" />
+</center>
+</div>
+
+<p>文章主张，在多个抽象层级上表示世界状态序列对智能行为是至关重要的。在多个抽象层次表示下，复杂的任务可以被分解为简单的任务；长期的任务可以被分解为短期；抽象层次的任务可以被分解为简单层次的。</p>
+<h3 id="层级化规划"><a href="#层级化规划" class="headerlink" title="层级化规划"></a>层级化规划</h3><div>
+<center>
+<img src="./world-model/h-jepa-planning.png" width="100%" height="100%" />
+</center>
+</div>
+
+<p>行为计划的中间表示应该被学习到。</p>
+<p><em>intermediate representations of action plans should be learned.</em></p>
+<p>高层级决策的行为是低层次决策的目标。</p>
+<h3 id="处理不确定性"><a href="#处理不确定性" class="headerlink" title="处理不确定性"></a>处理不确定性</h3><p>真实的世界不是完全可预测，产生不确定性的原因主要有：</p>
+<ul>
+<li>世界本质上是随机的（随机不确定性，Type1）</li>
+<li>世界是确定的，但很混乱，因此没有无限的精确感知是很难预测的（随机不确定性，Type2）</li>
+<li>世界是确定的，但是部分可观测的（随机不确定性，Type3）</li>
+<li>世界是可观测的，但是传感器只能观测到世界状态的部分信息（认知不确定性，Type1）</li>
+<li>世界状态的表示没有提取到进行正确预测的所必要信息（认知不确定性，Type2）</li>
+<li>世界模型是不正确的，来源于于世界模型有限的表示能力（有限理性/认知不确定性，Type3）</li>
+<li>世界模型是不正确的，来源于在有限数量的数据上训练（认知不确定性，Type4）</li>
+</ul>
+<p>在强化学习中的大多数方法，通过设计模型、评论家和策略的输出服从一个分布来建模不确定性。在JEPA中，不确定性通过潜变量$z$建模。</p>
+<p>潜变量$z$可以从摊销推理（Amortized Inference）中得到。</p>
+<p>在预测过程中，生成的状态轨迹可能是指数级增长的，为了解决这一问题，可以使用蒙特卡洛数搜索(Monte-Carlo Tree Search, MCTS)来解决。</p>
+<p>在计算最优行为时，不仅需要考虑最小化期望代价，还要考虑最小化期望代价的不确定性。</p>
+<h4 id="世界模型架构"><a href="#世界模型架构" class="headerlink" title="世界模型架构"></a>世界模型架构</h4><p>世界模型架构的细节依赖于智能体演变的环境类型。</p>
+<p>世界模型需要加入一些门控或者动态路由机制。</p>
+<ul>
+<li>针对低层次，短期预测，预测应该集中在时间和空间上移动局部特征向量的位置，产生下一帧的预测。</li>
+<li>针对高层次，长期预测，预测相关的特征应该是物体以及物体间的表示。</li>
+</ul>
+<p><strong>分离世界模型和自我模型</strong>：自然的世界是复杂且不可预测的，需要一个强大的，具有潜变量的模型去处理不可预测性。另一方面，智能体自身相对更可预测。因此，一个好的设计是拥有一个更加容易预测的自我模型（有可能不需要潜变量），将自我模型作为模板，来建模多智能体环境中的其他智能体。</p>
+<h3 id="跟踪世界的状态"><a href="#跟踪世界的状态" class="headerlink" title="跟踪世界的状态"></a>跟踪世界的状态</h3><p>通常，世界的状态由向量或者多维矩阵表示，但这很不高效。因为一个特定的行为往往只改变状态的一部分。文章主张世界的状态应该是可写的记忆，类似Transformer中token，记忆的更新也类似Attention机制。</p>
+<h3 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h3><p>主动(active or agentive)地收集信息对于训练世界模型是高效的，尽管关于运动的物理定律可以通过不带干预的观测学习到。</p>
+<p>学习世界模型中的五种信息收集模式：</p>
+<ol>
+<li>被动观测(passive observation)：<br>智能体接收到一个传感器流，如：视频，音频等。</li>
+<li>主动视点(active foveation)：<br>智能体接收到一个信息流，但是视角/聚焦点可以调整。例如：观测一个场景，可以调整视觉或者声音的角度；观测一个宽角度，高分辨率的视频或者音频流，但注意力的焦点可以被引导。</li>
+<li>被动代理(passive agency)：<br>智能体接收到一个传感器流，其他智能体在该传感器流中与环境交互，可以使代理学习到智能体行为对环境影响的因果作用。</li>
+<li>主动自我运动(active egomotion)：<br>智能体接收到一个传感器流，该流可能来自现实或虚拟环境，在流中，传感器的位置可以在不剧烈改变环境的前提下改变。这里传感器可能包括可操纵的主动传感器，如：距离传感器、热传感器、化学传感器，触觉传感器。</li>
+<li>主动代理(active agency)：<br>智能体接收到可以被自我行为影响的传感器流，基于此，智能体可以构建因果模型，进而学习预测行为序列。这个模式需要解决探索和利用间平衡的困境。</li>
+</ol>
+<p>在复杂的环境中，依靠收集足够多的被动信息来学习高效的世界模型可能并不可行。Mode2,4,5可以让智能体获得对环境的最大理解，但需要内部的动机模块来驱动注意力，好奇心，探索到世界模型状态空间的角落，这里模型的预测是不精确和不确定的。</p>
+<p>目前的挑战是：可以多大程度地从被动观测中学习世界模型（Mode1,2,4）；有多大程度地需要自我运动（Mode3）；有多大程度地需要全代理（Mode5）。</p>
+<h2 id="设计和训练行动者"><a href="#设计和训练行动者" class="headerlink" title="设计和训练行动者"></a>设计和训练行动者</h2><p>行动的模块的作用有3个：</p>
+<ol>
+<li>给定世界模型基于Mode-2行为的预测，推断最小化代价的最优行为序列；</li>
+<li>产生多个关于潜变量的配置，这些潜变量代表了智能不知道的世界状态的部分；</li>
+<li>学习产生Mode-1行为的策略网络。</li>
+</ol>
+<p>潜在变量和行为在概念上并无明显地不同。前者需要在不确定性下规划；后者需要产生具有最小化代价的行为序列。</p>
+<p>Mode-1的策略网络不仅可以用于决策，还可以在Mode-2的决策过程中产生好的初始策略。</p>
+<p>行动者也会产生潜变量，这些潜变量通过正则化项进行约束，这些正则化项将代表可以采样潜变量的对数先验。这种先验的分布可以使用摊销推理模块来学习，好的分布可以产生合理的预测。</p>
+<h2 id="设计配置器"><a href="#设计配置器" class="headerlink" title="设计配置器"></a>设计配置器</h2><p>配置器模块是智能体的主要控制器。该模块接收其他模块的输入，并配置其他模块的参数和连接图。其重要性体现在两个方面：硬件重复使用(hardware reuse)和知识共享(knowledge sharing)。硬件重复使用指使用同一个世界模型完成多个任务；知识共享指的是针对一个环境训练的世界模型可以在小幅度改变下应用到其他环境。重复使用一个世界模型的优势在于数据和计算高效；缺点在于同一时间只能完成一个任务。</p>
+<p>针对感知模块，在低层次的，需要快速检测某个特征的任务，可以使用配置器调整卷积层的低层参数；对于高层次的的关系约束（例如：使用螺丝连接两个工件），可以使用在高层次的Transformer模块中调整Token。</p>
+<p>针对预测模块，对短期低层预测的类似视网膜的功能的模块，使用局部门控或者路由机制更合适；对长期高抽象层次的预测，使用考虑物体交互的，基于物体的推理更合适。</p>
+<p>针对代价模块，可以调整不可变代价的线性组合；设置子目标更加合适，可以考虑在基于Transformer的架构中添加部分Token来控制其行为。高层次抽象的代价可以通过考虑如何衡量当前状态和子目标状态的一致性程度来确定。</p>
+<p>一个开放的问题：配置器如何学习将一个复杂的任务分解为多个可以由智能体单独完成的任务。</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><h3 id="训练世界模型，模型预测控制，层级化规划"><a href="#训练世界模型，模型预测控制，层级化规划" class="headerlink" title="训练世界模型，模型预测控制，层级化规划"></a>训练世界模型，模型预测控制，层级化规划</h3><p>处理不确定性、学习抽象表示、层级化规划、内部动机/奖励</p>
+<h3 id="基于能量的模型和联合嵌入架构"><a href="#基于能量的模型和联合嵌入架构" class="headerlink" title="基于能量的模型和联合嵌入架构"></a>基于能量的模型和联合嵌入架构</h3><p>对比的训练方法：PIRL、MoCo、MoCo-v2、SimCLR</p>
+<p>非对比训练方法：BYOL、Barlow Twins、VICReg、whitening-based methods、Maximum Coding Rate Reduction method。</p>
+<h3 id="人类和动物认知"><a href="#人类和动物认知" class="headerlink" title="人类和动物认知"></a>人类和动物认知</h3><p>目前其机器与人类和动物的认知的区别很明显：</p>
+<ol>
+<li>人类小孩可以快速学习抽象概念，对导航、构建目标和规划完成目的的复杂行为序列进行建模；</li>
+<li>可预测世界模型的构建；</li>
+<li>不同抽象层次的规划能力。</li>
+</ol>
+<p>意识(consciousness)的讨论：C1和C2，C1和注意力模块相关，C2需要自我监控的能力，和JEPA中的配置模块相关。</p>
+<h2 id="讨论、局限性和更广泛的相关性"><a href="#讨论、局限性和更广泛的相关性" class="headerlink" title="讨论、局限性和更广泛的相关性"></a>讨论、局限性和更广泛的相关性</h2><h3 id="什么是提出的模型中缺少的部分？"><a href="#什么是提出的模型中缺少的部分？" class="headerlink" title="什么是提出的模型中缺少的部分？"></a>什么是提出的模型中缺少的部分？</h3><ul>
+<li>如何正则化潜在变量使其包含的信息量最小化，可选的方案有：离散化、降低维度、稀疏化、随机性。但是哪种最好未有定论。</li>
+<li>行动者如何推断潜在变量和最有序列的方法没有被特别指出。可以采用基于梯度的方式或者梯度无关的方式（如：动态规划、信念传递、MCTS、SAT）。</li>
+<li>在Mode-2规划/推理中，实例化潜变量的多个配置没有被提到。人类对一个概念可能有多个解释，并自发地在其中循环检验。如何在Mode-2规划/推理中实现这一点没有被解释。</li>
+<li>JEPA中各个模块的细节没有被指定。预测器在其微型架构中可能会需要某种动态路由和门控电路机制。预测器在低层次抽象概念在短期的转换中可能会需要微小的变换，在高层次抽象概念上可能需要设计操纵对象及其关系的更通用的实体。</li>
+<li>短期记忆的精确记忆和功能以及如何使用它来表示有关世界状态的信念(belief)比较模糊。</li>
+<li>配置器的具体实现不清楚。例如，在规划复杂任务时，配置器应该辨认出子目标序列并配置智能体成功完成这些子目标。如何做到这一点没有被具体说明。</li>
+<li>… 其他尚未预见到的问题。</li>
+</ul>
+<h3 id="提出的方法的更广泛的相关性"><a href="#提出的方法的更广泛的相关性" class="headerlink" title="提出的方法的更广泛的相关性"></a>提出的方法的更广泛的相关性</h3><h4 id="这种架构是否能够成为动物智能模型的基础？"><a href="#这种架构是否能够成为动物智能模型的基础？" class="headerlink" title="这种架构是否能够成为动物智能模型的基础？"></a>这种架构是否能够成为动物智能模型的基础？</h4><table>
+<thead>
+<tr>
+<th>模块(Module)</th>
+<th>动物大脑中的对应部位(counterparts in animal intelligence)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>感知(Perception)</td>
+<td>皮层(Cortex)的视觉、听觉和其他传感区域</td>
+</tr>
+<tr>
+<td>世界模型(World Model)</td>
+<td>前额叶皮层(prefrontal cortex)中的部分区域</td>
+</tr>
+<tr>
+<td>评论家(Critic)</td>
+<td>前额叶皮层(prefrontal cortex)中的部分区域</td>
+</tr>
+<tr>
+<td>内部代价(intrinsic cost)</td>
+<td>参与奖励机制的基地神经节(basal ganglia)，包括杏仁核(amygdala)</td>
+</tr>
+<tr>
+<td>可训练评论家(trainable critic)</td>
+<td>参与奖励预测的前额叶皮层</td>
+</tr>
+<tr>
+<td>短期记忆(short-term memory)</td>
+<td>海马体</td>
+</tr>
+<tr>
+<td>配置(configurator)</td>
+<td>前额叶皮层中执行控制和调节注意力的结构</td>
+</tr>
+<tr>
+<td>行为(actor)</td>
+<td>前运动(pre-motor)皮层中负责制定和编码运动计划的部分</td>
+</tr>
+</tbody></table>
+<p>JEPA与神经学在预测编码和高效编码相一致。</p>
+<p>关于只存在一个可配置的世界模型的假设可以解释人为什么一次只能一个有意识的推理。一个投机的想法是：意识可能是配置器的副产物。如果人脑有多个可以独立的，不可配置的世界模型，那么意识可能会消失。</p>
+<p>代价模块和人类的感情相关：内部代价与瞬时情感相关；可训练评论家与长期预测导致的情感相关。</p>
+<h4 id="世界模型是通向机器常识的路径吗？"><a href="#世界模型是通向机器常识的路径吗？" class="headerlink" title="世界模型是通向机器常识的路径吗？"></a>世界模型是通向机器常识的路径吗？</h4><p>自监督的视觉模型学习的是低层次的抽象信息；LLM学习到的常识性有偏和不足的，不能直接反映世界的真实性。</p>
+<p>世界模型的训练的关键在于填补不能从感知和记忆中获得的关于世界的信息，例如：填补空白信息，预测未来。</p>
+<p>常识可能在学习捕获自我一致性和观测的相互依赖性的世界模型中出现。这种模型可以让智能体补全缺失的信息，检测不一致的信息。</p>
+<h3 id="智能是否只是扩展问题？奖励是否真的足够？"><a href="#智能是否只是扩展问题？奖励是否真的足够？" class="headerlink" title="智能是否只是扩展问题？奖励是否真的足够？"></a>智能是否只是扩展问题？奖励是否真的足够？</h3><h4 id="扩展是不足的"><a href="#扩展是不足的" class="headerlink" title="扩展是不足的"></a>扩展是不足的</h4><p>文章的主张：仅仅扩展是不足的</p>
+<ol>
+<li>目前的模型是Token化的。文本是在信号上是离散的token，而很多信号，如视频是高维连续信号。LLM没有表示不确定的潜变量。</li>
+<li>目前的模型只能进行有限的推理。如何处理一个概念的多义性和指定目标需要特殊设计。</li>
+</ol>
+<h4 id="奖励是不足的"><a href="#奖励是不足的" class="headerlink" title="奖励是不足的"></a>奖励是不足的</h4><ol>
+<li>无模型(Model-free)的强化学习方法仅仅依靠奖励是不足的，数据利用的效率低下，需要多次与环境交互。基于模型(Model-based)的强化学习（世界模型）更加高效。</li>
+<li>仅仅依靠奖励的大小学习是不够的，需要引入预测观测/状态的机制。</li>
+</ol>
+<h4 id="是否需要符号来推理"><a href="#是否需要符号来推理" class="headerlink" title="是否需要符号来推理"></a>是否需要符号来推理</h4><p>如果行为和潜变量都是连续，预测器和代价模块都是可微的，可以使用基于梯度的方式。但是很多时候，行为空间是不连续的。</p>
+<p>如过行为空间是离散且低维的，可以详尽搜索；如果维度较高，可以使用MCTS；如果代价函数满足贝尔曼方程，可以使用动态规划。</p>
+<p>一种高效应对离散行为空间搜索的方法：学习层次化的表示，基于该表示，规划和推理问题组成到离散问题的连续松弛。</p>
+<p><strong>余下的问题</strong>：提出的推理类型是否包含人类和动物拥有的所有推理形式？</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2024/01/10/config-tensorflow/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -920,6 +1380,7 @@
 <h4 id="GPUtil"><a href="#GPUtil" class="headerlink" title="GPUtil"></a>GPUtil</h4><p>用于获取系统GPU资源信息，如GPU的显存使用率，可用显存，驱动版本，序列号等。具体用法可参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/LuohenYJ/article/details/125857613">GPUtil获取系统状态信息</a></p>
 <h4 id="dotmap"><a href="#dotmap" class="headerlink" title="dotmap"></a>dotmap</h4><p>有序、动态扩展的点访问字典。同时具备键值对查询和点查询。具体用例可参考<a target="_blank" rel="noopener" href="https://pypi.org/project/dotmap/">PyPI dotmap project</a></p>
 <h4 id="cachetools"><a href="#cachetools" class="headerlink" title="cachetools"></a>cachetools</h4><p>数据缓存包，支持常见的数据缓存策略，如：Least Recently Used (LRU)，First-In-First-Out (FIFO)等。使用键值对进行查找。具体用例可参考<a target="_blank" rel="noopener" href="https://pypi.org/project/cachetools/">cachetools</a>或<a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/1207758">Python缓存神器cachetools</a>。</p>
+<h4 id="beartype"><a href="#beartype" class="headerlink" title="beartype"></a>beartype</h4><p>以近乎实时的性能进行静态类型检查。具体用例可参考<a target="_blank" rel="noopener" href="https://github.com/beartype/beartype">beartype</a>。</p>
 
           
         
@@ -2480,14 +2941,16 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
 <li>升级pip<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -U pip</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="环境打包与迁移"><a href="#环境打包与迁移" class="headerlink" title="环境打包与迁移"></a>环境打包与迁移</h2><h3 id="conda-pack"><a href="#conda-pack" class="headerlink" title="conda-pack"></a>conda-pack</h3><ul>
-<li>打包环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install conda-pack # 下载打包软件库</span><br><span class="line">conda pack -n env_name # 打包环境（打包为env_nam.tar.gz文件）</span><br><span class="line">conda pack -n env_name --ignore-editable-packages # (Optional) 忽略可编辑的软件库。当环境存在可编辑的软件库时，常规打包指令会失败</span><br></pre></td></tr></table></figure></li>
+<li>打包环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pip install conda-pack # 下载打包软件库</span><br><span class="line">conda pack -n env_name # 打包环境（打包为env_nam.tar.gz文件）</span><br><span class="line">conda pack -n env_name --ignore-editable-packages # (Optional) 忽略可编辑的软件库。当环境存在可编辑的软件库时，常规打包指令会失败</span><br><span class="line">conda pack -n env_name --ignore-missing-files # 忽略缺少的文件。当出现环境文件不一致，缺少某些文件时，常规打包指令会出错。</span><br></pre></td></tr></table></figure></li>
 <li>迁移环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir env_name</span><br><span class="line">tar -xzf env_nam.tar.gz -C env_name # 解压打包后的环境</span><br><span class="line">mv env_name  ~/anaconda3/envs/ # 移动环境到anaconda目录</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="environment-yaml"><a href="#environment-yaml" class="headerlink" title="environment.yaml"></a>environment.yaml</h3><ul>
 <li>打包环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda env export &gt; environment.yml </span><br></pre></td></tr></table></figure></li>
 <li>迁移环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda env create -f environment.yml</span><br></pre></td></tr></table></figure></li>
 </ul>
-
+<h3 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">This is usually due to `pip` uninstalling or clobbering conda managed files,</span><br><span class="line">resulting in an inconsistent environment. Please check your environment for</span><br><span class="line">conda/pip conflicts using `conda list`, and fix the environment by ensuring</span><br><span class="line">only one version of each package is installed (conda preferred)</span><br></pre></td></tr></table></figure>
+<p>Answer: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda pack -n env_name --ignore-missing-files</span><br></pre></td></tr></table></figure>
           
         
       
@@ -3378,7 +3841,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -3389,7 +3852,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -3400,7 +3863,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
