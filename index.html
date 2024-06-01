@@ -261,6 +261,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2024/06/01/docker-command/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lixuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/06/01/docker-command/" itemprop="url">Dcoker用法及指令</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2024-06-01T23:42:09+08:00">
+                2024-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">软件配置</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Docker是操作系统层面的虚拟化技术，可以对文件系统、网络和进程进行隔离。与常见的虚拟化方式——虚拟机(Virtual Machine)不同，Docker不包含系统，只包含应用程序及其依赖，与原系统共享内核，因此更为轻量级，部署更轻便快捷。下图展示了Docker与虚拟机的对比。</p>
+<div>
+<center>
+<img src="./docker-command/docker-virtual_machine.png" width="75%" height="25%" />
+</center>
+</div>
+
+<h2 id="下载和卸载-Ubuntu"><a href="#下载和卸载-Ubuntu" class="headerlink" title="下载和卸载(Ubuntu)"></a>下载和卸载(Ubuntu)</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update </span><br><span class="line">sudo apt install docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
+
+<h3 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove docker docker-engine docker.io</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker启动"><a href="#Docker启动" class="headerlink" title="Docker启动"></a>Docker启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> docker</span><br><span class="line">sudo systemctl start docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置Docker用户组"><a href="#设置Docker用户组" class="headerlink" title="设置Docker用户组"></a>设置Docker用户组</h2><p>下载之后的Dcoker每次使用时需要添加 sudo 权限，这一方面带来指令上的麻烦，另一方面，在使用Docker相关插件时，如VSCode Docker插件可能会遇到权限问题。为了避免这个问题，可以在ubuntu中设置docker用户组，将需要使用docker的用户加入该用户组。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo groupadd docker <span class="comment"># 新建 docker用户组</span></span><br><span class="line">sudo usermod -aG docker <span class="variable">$USER</span> <span class="comment"># 将当前用户加入 docker 用户组</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用Docker"><a href="#使用Docker" class="headerlink" title="使用Docker"></a>使用Docker</h2><h3 id="镜像-Image"><a href="#镜像-Image" class="headerlink" title="镜像 (Image)"></a>镜像 (Image)</h3><p>Docker 镜像是一种打包好的运行环境，包含除内核外的操作系统内容。镜像的命名规则为usrname/name:tag。镜像的常见指令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker image <span class="built_in">ls</span> <span class="comment"># 列出当前系统上的镜像文件</span></span><br><span class="line">docker system <span class="built_in">df</span> <span class="comment"># 查看镜像容器存储大小</span></span><br><span class="line">docker image <span class="built_in">ls</span> -q <span class="comment"># 列出所有镜像的ID</span></span><br><span class="line">docker image <span class="built_in">ls</span> -a <span class="comment"># 列出所有镜像文件，包含中间层镜像</span></span><br><span class="line">docker image <span class="built_in">ls</span> name <span class="comment"># 列出特定名字的镜像</span></span><br><span class="line">docker image <span class="built_in">rm</span> name <span class="comment"># 删除特定名字的镜像</span></span><br><span class="line">docker image <span class="built_in">rm</span> $(docker image <span class="built_in">ls</span> -q name) <span class="comment"># 批量删除特定名字的镜像</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="容器-Container"><a href="#容器-Container" class="headerlink" title="容器 (Container)"></a>容器 (Container)</h3><p>Docker 容器是镜像的示例化。镜像的常见指令如下：</p>
+<ul>
+<li>启动容器<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run username/name:tag <span class="built_in">command</span> <span class="comment"># 基于镜像 username/name:tag 启动容器，执行command后退出</span></span><br><span class="line">docker run -it username/name:tag <span class="built_in">command</span>  <span class="comment"># 以 i（容器标准输入打开）， t（分配伪终端&lt;pseudo-tty&gt;给容器）参数启动容器</span></span><br><span class="line">docker run -t username/name:tag <span class="built_in">command</span> <span class="comment"># 以守护态运行容器，Docker会在后台运行而不是直接把命令打印在当前主机下</span></span><br></pre></td></tr></table></figure></li>
+<li>终止和重启容器<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker container stop container_id <span class="comment"># 停止特定ID的正在运行的容器</span></span><br><span class="line">docker container start container_id <span class="comment"># 启动特定ID的已终止容器</span></span><br><span class="line">docker container restart container_id <span class="comment"># 重启特定ID的已终止容器</span></span><br></pre></td></tr></table></figure></li>
+<li>查看容器<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker container <span class="built_in">ls</span> <span class="comment"># 列出正在运行的容器</span></span><br><span class="line">docker container <span class="built_in">ls</span> -a <span class="comment"># 列出所有容器，包含已终止容器</span></span><br></pre></td></tr></table></figure></li>
+<li>进入容器<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker attach container_id <span class="comment"># 进入特定ID的容器，此方式进入，退出会终止容器</span></span><br><span class="line">docker <span class="built_in">exec</span> -it container_id bash <span class="comment"># 进入特定ID的容器，此方式进入，退出不会终止容器</span></span><br></pre></td></tr></table></figure></li>
+<li>删除容器<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker container <span class="built_in">rm</span> container_id <span class="comment"># 删除特定ID的已终止容器</span></span><br><span class="line">docker container prune <span class="comment"># 删除所有已终止的容器</span></span><br></pre></td></tr></table></figure></li>
+<li>导入导出容器<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">export</span> 7691a814370e &gt; docker_image.tar <span class="comment"># 导出特定ID的容器到docker_image.tar文件</span></span><br><span class="line"><span class="built_in">cat</span> docker_image.tar | docker import - username/name:tag <span class="comment"># 从docker_image.tar文件导入为镜像username/name:tag</span></span><br><span class="line">docker import http://example.com/exampleimage.tgz username/name:tag  <span class="comment"># 从某链接导入为镜像username/name:tag</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="网络-Network"><a href="#网络-Network" class="headerlink" title="网络 (Network)"></a>网络 (Network)</h3><p>Docker包含三个默认网络: <code>host</code>，<code>none</code>，<code>bridge</code>。除此之外，每个docker容器都会分配独立的网络。</p>
+<ul>
+<li>查看当前网络<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network <span class="built_in">ls</span> <span class="comment"># 列出当前主机上的docker网络</span></span><br></pre></td></tr></table></figure></li>
+<li>启动时的网络参数<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -net=host -d username/name:tag <span class="comment"># 基于镜像 username/name:tag 启动容器，设定与主机共享网络</span></span><br><span class="line">docker run -net=container:container_id/name -d username/name:tag <span class="comment"># 基于镜像 username/name:tag 启动容器，设定与特定ID或者名字的容器共享网络</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="仓库-Hub"><a href="#仓库-Hub" class="headerlink" title="仓库 (Hub)"></a>仓库 (Hub)</h3><p><a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker 仓库</a>存储了大量公开的镜像。自己也可以注册，创建公开或者私有的镜像。</p>
+<ul>
+<li>Docker Hub登录和登出<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker login <span class="comment"># 交互式登录</span></span><br><span class="line">docker <span class="built_in">logout</span> <span class="comment"># 退出登录</span></span><br></pre></td></tr></table></figure></li>
+<li>Docker 拉取镜像<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull username/name:tag <span class="comment"># 拉取特定镜像到本地</span></span><br><span class="line">docker search key <span class="comment"># 在Docker仓库里以特定关键词搜素镜像</span></span><br></pre></td></tr></table></figure></li>
+<li>Docker 推送镜像<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push username/name:tag <span class="comment">#  推送镜像username/name:tag到自己仓库</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="更多参考"><a href="#更多参考" class="headerlink" title="更多参考"></a>更多参考</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice">Docker — 从入门到实践</a></li>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker Hub</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dusty-nv/jetson-containers">Jetson Container</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2024/01/26/world-model-dev/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3841,7 +4026,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -3863,7 +4048,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
