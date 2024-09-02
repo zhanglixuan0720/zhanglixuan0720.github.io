@@ -261,6 +261,187 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2024/06/27/vector-quantization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lixuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/06/27/vector-quantization/" itemprop="url">神经离散表示学习</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2024-06-27T00:40:38+08:00">
+                2024-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9F%A5%E8%AF%86%E5%BA%93/" itemprop="url" rel="index">
+                    <span itemprop="name">知识库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本文主要介绍离散表示学习，尤其是图像向量量化中的常见方法、工具和应用，主要是工具记录备忘。</p>
+<h2 id="VQ-VAE中的常用Loss"><a href="#VQ-VAE中的常用Loss" class="headerlink" title="VQ-VAE中的常用Loss"></a>VQ-VAE中的常用Loss</h2><ol>
+<li><em>VQ loss/ VQ Objective</em></li>
+</ol>
+<p>Due to the straight-through gradient estimation of mapping from ze(x) to zq(x), the embeddings ei receive no gradients from the reconstruction loss log p(z|zq(x)). Therefore, in order to learn the embedding space, we use one of the simplest dictionary learning algorithms, Vector Quantisation (VQ). The VQ objective uses the l2 error to move the embedding vectors ei towards the encoder outputs ze(x) as shown in the second term of equation</p>
+<ol start="2">
+<li><em>reconstruction loss</em></li>
+</ol>
+<p>optimizes the decoder and the encoder (through the estimator explained above)</p>
+<ol start="3">
+<li><em>commitment loss</em></li>
+</ol>
+<p>since the volume of the embedding space is dimensionless, it can grow arbitrarily if the embeddings ei do not train as fast as the encoder parameters. To make sure the encoder commits to an embedding and its output does not grow,</p>
+<ol start="4">
+<li><em>GAN loss</em></li>
+</ol>
+<p>perceptually important local structure to alleviate the need for modeling low-level statistics with the transformer architecture</p>
+<ol start="5">
+<li><em>perceptual loss</em></li>
+</ol>
+<p>perceptually important local structure to alleviate the need for modeling low-level statistics with the transformer architecture</p>
+<ol start="6">
+<li><em>entropy loss</em></li>
+</ol>
+<p>$$<br>\mathbb{E}[H(q(z))] - H(\mathbb{E}[q(z)])<br>$$<br>an entropy penalty during training to encourage codebook utilization</p>
+<h2 id="工具介绍"><a href="#工具介绍" class="headerlink" title="工具介绍"></a>工具介绍</h2><h3 id="vector-quantize-pytorch"><a href="#vector-quantize-pytorch" class="headerlink" title="vector-quantize-pytorch"></a><a target="_blank" rel="noopener" href="https://github.com/lucidrains/vector-quantize-pytorch">vector-quantize-pytorch</a></h3><p>基于Pytorch实现了VQ-VAE及其常见的变种、改进技巧。例如：</p>
+<ol>
+<li>Residual VQ</li>
+<li>SoundStream Initialization</li>
+<li>Lower codebook dimension</li>
+<li>Cosine similarity</li>
+<li>Expiring stale codes</li>
+<li>Orthogonal regularization loss</li>
+<li>Multi-headed VQ</li>
+<li>Random Projection Quantizer</li>
+<li>Finite Scalar Quantization</li>
+<li>Lookup Free Quantization：MaskGIT 基于这种向量化方法进行图像token化。MaskGIT的向量化的Pytorch实现：<a target="_blank" rel="noopener" href="https://github.com/lucidrains/phenaki-pytorch?tab=readme-ov-file">Phenaki - Pytorch</a></li>
+<li>Latent Quantization</li>
+</ol>
+<h3 id="STNN"><a href="#STNN" class="headerlink" title="STNN"></a><a target="_blank" rel="noopener" href="https://github.com/wubin5/STTN/tree/main">STNN</a></h3><p>时空Transformer的一种实现。向量化编码后的图像可以送入Transformer进行计算，时空Transformer是一种考虑时间和空间依赖关系的Transformer结构。不同于直接在3D空间中建模，时空Transformer通过在时间和空间维度上交错Attention来捕获时空关系。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2024/06/01/docker-command/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2185,6 +2366,17 @@
 <h4 id="下载-1"><a href="#下载-1" class="headerlink" title="下载"></a>下载</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install tree</span><br></pre></td></tr></table></figure>
 
 <h4 id="常用指令-1"><a href="#常用指令-1" class="headerlink" title="常用指令"></a>常用指令</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ tree # 显示当前文件夹目录结构</span><br><span class="line">$ tree --help # 查看帮助信息</span><br><span class="line">$ tree -L N # 显示当前目录第N级的目录和文件</span><br><span class="line">$ tree &gt; filename # 将目录结构信息保存在文件中</span><br></pre></td></tr></table></figure>
+
+<h3 id="X"><a href="#X" class="headerlink" title="X"></a>X</h3><p>在服务器上使用模拟器，如Habitat时，尽管已经按照文档安装了headless版本，但仍然可能会提示<code>DISPLAY not detected. For headless systems, compile with --headless for EGL support</code>，为了解决该问题，一种方式是从源码编译headless版本，另一种方式是使用X构建虚拟屏幕。</p>
+<ul>
+<li>启动X：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo nohup X :99 &amp; disown # nohup启动</span><br><span class="line">$ sudo X :99 # 在tmux框中启动</span><br></pre></td></tr></table></figure></li>
+<li>使用虚拟屏幕<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export DISPLAY=:99</span><br></pre></td></tr></table></figure>
+注：这里数字可以换成0之外的任何数字，0是默认屏幕，启动0可能会产生冲突</li>
+</ul>
+<p>如果用户没有sudo权限，可以申请服务器管理员修改<code>/etc/X11/Xwrapper.config</code>文件，写入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">allowed_users = anybody</span><br></pre></td></tr></table></figure>
+
+
           
         
       
@@ -3595,7 +3787,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -3606,7 +3798,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -3617,7 +3809,7 @@ fidn的常用参数<figure class="highlight plaintext"><table><tr><td class="gut
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

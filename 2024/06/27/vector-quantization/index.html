@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="离散表示学习,图像编码量化,VQ-VAE," />
 
 
 
@@ -79,14 +79,19 @@
 
 
 
-<meta name="description" content="It is not the mountain we conquer but ourselves.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Lixuan&#39;s Blog">
-<meta property="og:url" content="https://zhanglixuan0720.github.io/archives/index.html">
+<meta name="description" content="介绍本文主要介绍离散表示学习，尤其是图像向量量化中的常见方法、工具和应用，主要是工具记录备忘。 VQ-VAE中的常用Loss VQ loss&#x2F; VQ Objective  Due to the straight-through gradient estimation of mapping from ze(x) to zq(x), the embeddings ei receive no gradi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经离散表示学习">
+<meta property="og:url" content="https://zhanglixuan0720.github.io/2024/06/27/vector-quantization/index.html">
 <meta property="og:site_name" content="Lixuan&#39;s Blog">
-<meta property="og:description" content="It is not the mountain we conquer but ourselves.">
+<meta property="og:description" content="介绍本文主要介绍离散表示学习，尤其是图像向量量化中的常见方法、工具和应用，主要是工具记录备忘。 VQ-VAE中的常用Loss VQ loss&#x2F; VQ Objective  Due to the straight-through gradient estimation of mapping from ze(x) to zq(x), the embeddings ei receive no gradi">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-06-26T16:40:38.000Z">
+<meta property="article:modified_time" content="2024-06-26T17:14:22.396Z">
 <meta property="article:author" content="Lixuan Zhang">
+<meta property="article:tag" content="离散表示学习">
+<meta property="article:tag" content="图像编码量化">
+<meta property="article:tag" content="VQ-VAE">
 <meta name="twitter:card" content="summary">
 
 
@@ -117,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://zhanglixuan0720.github.io/archives/"/>
+  <link rel="canonical" href="https://zhanglixuan0720.github.io/2024/06/27/vector-quantization/"/>
 
 
 
 
 
-  <title>Archive | Lixuan's Blog</title>
+  <title>神经离散表示学习 | Lixuan's Blog</title>
   
 
 
@@ -142,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -246,416 +251,212 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2024/06/27/vector-quantization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lixuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">神经离散表示学习</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2024-06-27T00:40:38+08:00">
+                2024-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 21 posts in total. Keep on posting.
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9F%A5%E8%AF%86%E5%BA%93/" itemprop="url" rel="index">
+                    <span itemprop="name">知识库</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2024">2024</h1>
-          </div>
-        
-        
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2024/06/27/vector-quantization/" itemprop="url">
-              
-                <span itemprop="name">神经离散表示学习</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2024-06-27T00:40:38+08:00"
-              content="2024-06-27" >
-          06-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2024/06/01/docker-command/" itemprop="url">
-              
-                <span itemprop="name">Dcoker用法及指令</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2024-06-01T23:42:09+08:00"
-              content="2024-06-01" >
-          06-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2024/01/10/config-tensorflow/" itemprop="url">
-              
-                <span itemprop="name">配置TensorFlow</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2024-01-10T19:48:21+08:00"
-              content="2024-01-10" >
-          01-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2023">2023</h1>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2023/10/31/install-carla/" itemprop="url">
-              
-                <span itemprop="name">安装CARLA模拟器</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-10-31T10:56:30+08:00"
-              content="2023-10-31" >
-          10-31
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2023/10/11/model-storage-format/" itemprop="url">
-              
-                <span itemprop="name">深度学习模型存储格式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-10-11T16:20:55+08:00"
-              content="2023-10-11" >
-          10-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2023/10/11/python-log/" itemprop="url">
-              
-                <span itemprop="name">Python 使用记录</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-10-11T11:18:01+08:00"
-              content="2023-10-11" >
-          10-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本文主要介绍离散表示学习，尤其是图像向量量化中的常见方法、工具和应用，主要是工具记录备忘。</p>
+<h2 id="VQ-VAE中的常用Loss"><a href="#VQ-VAE中的常用Loss" class="headerlink" title="VQ-VAE中的常用Loss"></a>VQ-VAE中的常用Loss</h2><ol>
+<li><em>VQ loss/ VQ Objective</em></li>
+</ol>
+<p>Due to the straight-through gradient estimation of mapping from ze(x) to zq(x), the embeddings ei receive no gradients from the reconstruction loss log p(z|zq(x)). Therefore, in order to learn the embedding space, we use one of the simplest dictionary learning algorithms, Vector Quantisation (VQ). The VQ objective uses the l2 error to move the embedding vectors ei towards the encoder outputs ze(x) as shown in the second term of equation</p>
+<ol start="2">
+<li><em>reconstruction loss</em></li>
+</ol>
+<p>optimizes the decoder and the encoder (through the estimator explained above)</p>
+<ol start="3">
+<li><em>commitment loss</em></li>
+</ol>
+<p>since the volume of the embedding space is dimensionless, it can grow arbitrarily if the embeddings ei do not train as fast as the encoder parameters. To make sure the encoder commits to an embedding and its output does not grow,</p>
+<ol start="4">
+<li><em>GAN loss</em></li>
+</ol>
+<p>perceptually important local structure to alleviate the need for modeling low-level statistics with the transformer architecture</p>
+<ol start="5">
+<li><em>perceptual loss</em></li>
+</ol>
+<p>perceptually important local structure to alleviate the need for modeling low-level statistics with the transformer architecture</p>
+<ol start="6">
+<li><em>entropy loss</em></li>
+</ol>
+<p>$$<br>\mathbb{E}[H(q(z))] - H(\mathbb{E}[q(z)])<br>$$<br>an entropy penalty during training to encourage codebook utilization</p>
+<h2 id="工具介绍"><a href="#工具介绍" class="headerlink" title="工具介绍"></a>工具介绍</h2><h3 id="vector-quantize-pytorch"><a href="#vector-quantize-pytorch" class="headerlink" title="vector-quantize-pytorch"></a><a target="_blank" rel="noopener" href="https://github.com/lucidrains/vector-quantize-pytorch">vector-quantize-pytorch</a></h3><p>基于Pytorch实现了VQ-VAE及其常见的变种、改进技巧。例如：</p>
+<ol>
+<li>Residual VQ</li>
+<li>SoundStream Initialization</li>
+<li>Lower codebook dimension</li>
+<li>Cosine similarity</li>
+<li>Expiring stale codes</li>
+<li>Orthogonal regularization loss</li>
+<li>Multi-headed VQ</li>
+<li>Random Projection Quantizer</li>
+<li>Finite Scalar Quantization</li>
+<li>Lookup Free Quantization：MaskGIT 基于这种向量化方法进行图像token化。MaskGIT的向量化的Pytorch实现：<a target="_blank" rel="noopener" href="https://github.com/lucidrains/phenaki-pytorch?tab=readme-ov-file">Phenaki - Pytorch</a></li>
+<li>Latent Quantization</li>
+</ol>
+<h3 id="STNN"><a href="#STNN" class="headerlink" title="STNN"></a><a target="_blank" rel="noopener" href="https://github.com/wubin5/STTN/tree/main">STNN</a></h3><p>时空Transformer的一种实现。向量化编码后的图像可以送入Transformer进行计算，时空Transformer是一种考虑时间和空间依赖关系的Transformer结构。不同于直接在3D空间中建模，时空Transformer通过在时间和空间维度上交错Attention来捕获时空关系。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2023/10/10/hydra-log/" itemprop="url">
-              
-                <span itemprop="name">Hydra 记录</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-10-10T23:25:00+08:00"
-              content="2023-10-10" >
-          10-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2023/10/07/install-ros2/" itemprop="url">
-              
-                <span itemprop="name">ROS2安装简要</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-10-07T10:36:51+08:00"
-              content="2023-10-07" >
-          10-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2023/09/15/data-format/" itemprop="url">
-              
-                <span itemprop="name">数据存储格式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-09-15T17:09:11+08:00"
-              content="2023-09-15" >
-          09-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2023/04/25/linux-icon/" itemprop="url">
-              
-                <span itemprop="name">linux 常见符号释意</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-04-25T08:57:32+08:00"
-              content="2023-04-25" >
-          04-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E7%A6%BB%E6%95%A3%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0/" rel="tag"># 离散表示学习</a>
+          
+            <a href="/tags/%E5%9B%BE%E5%83%8F%E7%BC%96%E7%A0%81%E9%87%8F%E5%8C%96/" rel="tag"># 图像编码量化</a>
+          
+            <a href="/tags/VQ-VAE/" rel="tag"># VQ-VAE</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/06/01/docker-command/" rel="next" title="Dcoker用法及指令">
+                <i class="fa fa-chevron-left"></i> Dcoker用法及指令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -663,6 +464,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -683,8 +488,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -764,6 +578,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VQ-VAE%E4%B8%AD%E7%9A%84%E5%B8%B8%E7%94%A8Loss"><span class="nav-number">2.</span> <span class="nav-text">VQ-VAE中的常用Loss</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.</span> <span class="nav-text">工具介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vector-quantize-pytorch"><span class="nav-number">3.1.</span> <span class="nav-text">vector-quantize-pytorch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#STNN"><span class="nav-number">3.2.</span> <span class="nav-text">STNN</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -904,6 +734,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
