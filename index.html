@@ -261,6 +261,207 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2025/04/08/ros2-venv/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lixuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2025/04/08/ros2-venv/" itemprop="url">在ROS2中使用Python虚拟环境</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-04-08T11:00:00+08:00">
+                2025-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">软件配置</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在ROS2开发中，我们经常需要使用不同的Python包和依赖。使用Python虚拟环境可以帮助我们更好地管理这些依赖，避免包冲突，同时保持系统Python环境的清洁。本文将介绍如何在ROS2中配置和使用Python虚拟环境。</p>
+<h2 id="创建虚拟环境"><a href="#创建虚拟环境" class="headerlink" title="创建虚拟环境"></a>创建虚拟环境</h2><ol>
+<li><p>首先，确保ROS2的环境已经被成功source：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /opt/ros/foxy/setup.sh</span><br></pre></td></tr></table></figure></li>
+<li><p>在你的ROS2工作空间中创建虚拟环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/ros2_ws</span><br><span class="line">python3 -m venv venv --system-site-packages --symlinks</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>第二个<code>venv</code> 是虚拟环境的名称</li>
+<li>如果<code>venv</code> 创建在了workspace中，那么需要创建<code>COLCON_IGNORE</code>文件，避免被colcon编译<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> COLCON_IGNORE</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="3">
+<li><p>激活虚拟环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br></pre></td></tr></table></figure></li>
+<li><p>在虚拟环境中安装必要的Python包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install torch <span class="comment"># etc.</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="在ROS2中使用虚拟环境"><a href="#在ROS2中使用虚拟环境" class="headerlink" title="在ROS2中使用虚拟环境"></a>在ROS2中使用虚拟环境</h2><ol>
+<li><p>在每一个package的setup.cfg文件中，添加以下代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[build_scripts]</span><br><span class="line">executable = /usr/bin/env python3</span><br></pre></td></tr></table></figure></li>
+<li><p>编译你的package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">colcon build</span><br></pre></td></tr></table></figure></li>
+<li><p>运行你的package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> install/setup.bash</span><br><span class="line">ros2 run my_package my_node</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
+<li>每次打开新终端都需要重新激活虚拟环境</li>
+<li>确保在虚拟环境中安装了所有必要的Python依赖</li>
+<li>如果遇到找不到ROS2包的问题，检查是否正确source了ROS2和工作空间的setup文件</li>
+</ul>
+<h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><h3 id="1-使用colcon-build-symlink-install-命令时，会出现安装在虚拟环境的包无法被找到的问题。"><a href="#1-使用colcon-build-symlink-install-命令时，会出现安装在虚拟环境的包无法被找到的问题。" class="headerlink" title="1. 使用colcon build --symlink-install 命令时，会出现安装在虚拟环境的包无法被找到的问题。"></a>1. 使用<code>colcon build --symlink-install</code> 命令时，会出现安装在虚拟环境的包无法被找到的问题。</h3><p>解决方案：</p>
+<ol>
+<li>在虚拟环境中强制重新安装colcon。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br><span class="line">pip install --force-reinstall colcon-core setuptools==$(pip list --no-index --format=json |  jq -r <span class="string">&#x27;.[] | select(.name==&quot;setuptools&quot;).version&#x27;</span>)</span><br><span class="line">pip install colcon-common-extensions</span><br><span class="line">pip install -U pip</span><br><span class="line">pip install -U setuptools </span><br><span class="line">pip install -U importlib_metadata </span><br></pre></td></tr></table></figure></li>
+<li>使用当前环境的colcon编译ROS2包。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m colcon build --symlink-install</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="2-使用anaconda虚拟环境。"><a href="#2-使用anaconda虚拟环境。" class="headerlink" title="2. 使用anaconda虚拟环境。"></a>2. 使用anaconda虚拟环境。</h3><p>思路与使用venv类似。</p>
+<ol>
+<li>创建虚拟环境<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n myenv python=3.8</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>保证Python版本与系统Python版本一致。比如：ROS2 foxy 对应 Python 3.8</li>
+</ul>
+<ol start="2">
+<li><p>激活虚拟环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate myenv</span><br></pre></td></tr></table></figure></li>
+<li><p>在虚拟环境中安装必要的Python包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install torch <span class="comment"># etc.</span></span><br></pre></td></tr></table></figure></li>
+<li><p>在ROS2的package中，添加以下代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[build_scripts]</span><br><span class="line">executable = /usr/bin/env python3</span><br></pre></td></tr></table></figure></li>
+<li><p>编译你的package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">colcon build</span><br></pre></td></tr></table></figure></li>
+<li><p>运行你的package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> install/setup.bash</span><br><span class="line">ros2 run my_package my_node</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://medium.com/ros2-tips-and-tricks/running-ros2-nodes-in-a-python-virtual-environment-b31c1b863cdb">Running ROS2 Nodes in a Python Virtual Environment</a> - ROS2虚拟环境配置指南</li>
+<li><a target="_blank" rel="noopener" href="https://docs.ros.org/en/foxy/How-To-Guides/Using-Python-Packages.html#installing-via-a-package-manager">ROS2 官方文档：使用Python包</a> - Python包管理最佳实践</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ros2/ros2/issues/1094#issuecomment-927179578">ROS2 Issue: Python环境问题讨论</a> - 社区解决方案</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pypa/setuptools/issues/4490">Setuptools Issue: 虚拟环境兼容性</a> - Setuptools相关问题解决</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2024/06/27/vector-quantization/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1455,207 +1656,6 @@
         
           
             <h3 id="Output-Working-directory"><a href="#Output-Working-directory" class="headerlink" title="Output/Working directory"></a>Output/Working directory</h3><p>设置<code>hydra.job.chdir=True</code>将Working directory设置为Output directory。在Hydra 1.2之后，该参数默认为False。Working directory与正常Python文件的工作目录一致。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2023/10/07/ros2-venv/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lixuan's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2023/10/07/ros2-venv/" itemprop="url">在ROS2中使用Python虚拟环境</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-10-07T11:00:00+08:00">
-                2023-10-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index">
-                    <span itemprop="name">软件配置</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在ROS2开发中，我们经常需要使用不同的Python包和依赖。使用Python虚拟环境可以帮助我们更好地管理这些依赖，避免包冲突，同时保持系统Python环境的清洁。本文将介绍如何在ROS2中配置和使用Python虚拟环境。</p>
-<h2 id="创建虚拟环境"><a href="#创建虚拟环境" class="headerlink" title="创建虚拟环境"></a>创建虚拟环境</h2><ol>
-<li><p>首先，确保ROS2的环境已经被成功source：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /opt/ros/foxy/setup.sh</span><br></pre></td></tr></table></figure></li>
-<li><p>在你的ROS2工作空间中创建虚拟环境</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/ros2_ws</span><br><span class="line">python3 -m venv venv --system-site-packages --symlinks</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li>第二个<code>venv</code> 是虚拟环境的名称</li>
-<li>如果<code>venv</code> 创建在了workspace中，那么需要创建<code>COLCON_IGNORE</code>文件，避免被colcon编译<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> COLCON_IGNORE</span><br></pre></td></tr></table></figure></li>
-</ul>
-<ol start="3">
-<li><p>激活虚拟环境</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br></pre></td></tr></table></figure></li>
-<li><p>在虚拟环境中安装必要的Python包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install torch <span class="comment"># etc.</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="在ROS2中使用虚拟环境"><a href="#在ROS2中使用虚拟环境" class="headerlink" title="在ROS2中使用虚拟环境"></a>在ROS2中使用虚拟环境</h2><ol>
-<li><p>在每一个package的setup.cfg文件中，添加以下代码：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[build_scripts]</span><br><span class="line">executable = /usr/bin/env python3</span><br></pre></td></tr></table></figure></li>
-<li><p>编译你的package</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">colcon build</span><br></pre></td></tr></table></figure></li>
-<li><p>运行你的package</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> install/setup.bash</span><br><span class="line">ros2 run my_package my_node</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
-<li>每次打开新终端都需要重新激活虚拟环境</li>
-<li>确保在虚拟环境中安装了所有必要的Python依赖</li>
-<li>如果遇到找不到ROS2包的问题，检查是否正确source了ROS2和工作空间的setup文件</li>
-</ul>
-<h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><h3 id="1-使用colcon-build-symlink-install-命令时，会出现安装在虚拟环境的包无法被找到的问题。"><a href="#1-使用colcon-build-symlink-install-命令时，会出现安装在虚拟环境的包无法被找到的问题。" class="headerlink" title="1. 使用colcon build --symlink-install 命令时，会出现安装在虚拟环境的包无法被找到的问题。"></a>1. 使用<code>colcon build --symlink-install</code> 命令时，会出现安装在虚拟环境的包无法被找到的问题。</h3><p>解决方案：</p>
-<ol>
-<li>在虚拟环境中强制重新安装colcon。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br><span class="line">pip install --force-reinstall colcon-core setuptools==$(pip list --no-index --format=json |  jq -r <span class="string">&#x27;.[] | select(.name==&quot;setuptools&quot;).version&#x27;</span>)</span><br><span class="line">pip install colcon-common-extensions</span><br><span class="line">pip install -U pip</span><br><span class="line">pip install -U setuptools </span><br><span class="line">pip install -U importlib_metadata </span><br></pre></td></tr></table></figure></li>
-<li>使用当前环境的colcon编译ROS2包。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m colcon build --symlink-install</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="2-使用anaconda虚拟环境。"><a href="#2-使用anaconda虚拟环境。" class="headerlink" title="2. 使用anaconda虚拟环境。"></a>2. 使用anaconda虚拟环境。</h3><p>思路与使用venv类似。</p>
-<ol>
-<li>创建虚拟环境<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n myenv python=3.8</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li>保证Python版本与系统Python版本一致。比如：ROS2 foxy 对应 Python 3.8</li>
-</ul>
-<ol start="2">
-<li><p>激活虚拟环境</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate myenv</span><br></pre></td></tr></table></figure></li>
-<li><p>在虚拟环境中安装必要的Python包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install torch <span class="comment"># etc.</span></span><br></pre></td></tr></table></figure></li>
-<li><p>在ROS2的package中，添加以下代码：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[build_scripts]</span><br><span class="line">executable = /usr/bin/env python3</span><br></pre></td></tr></table></figure></li>
-<li><p>编译你的package</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">colcon build</span><br></pre></td></tr></table></figure></li>
-<li><p>运行你的package</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> install/setup.bash</span><br><span class="line">ros2 run my_package my_node</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://medium.com/ros2-tips-and-tricks/running-ros2-nodes-in-a-python-virtual-environment-b31c1b863cdb">Running ROS2 Nodes in a Python Virtual Environment</a> - ROS2虚拟环境配置指南</li>
-<li><a target="_blank" rel="noopener" href="https://docs.ros.org/en/foxy/How-To-Guides/Using-Python-Packages.html#installing-via-a-package-manager">ROS2 官方文档：使用Python包</a> - Python包管理最佳实践</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ros2/ros2/issues/1094#issuecomment-927179578">ROS2 Issue: Python环境问题讨论</a> - 社区解决方案</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/pypa/setuptools/issues/4490">Setuptools Issue: 虚拟环境兼容性</a> - Setuptools相关问题解决</li>
-</ol>
 
           
         
