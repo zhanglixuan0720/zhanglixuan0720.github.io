@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linux,服务器监控,CPU,GPU,性能分析," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言在深度学习任务管理中，了解服务器的资源使用情况至关重要。基于服务器的资源的使用情况，能够有效分析程序是CPU使用密集还是GPU使用密集，优化程序运行性能。本文将介绍如何使用top和gpustat命令来监控和分析服务器的CPU和GPU负载情况。 CPU负载分析：使用top命令基本使用1top top界面解析       系统信息概览（第1-5行）：   第1行：系统运行时间、用户数、负载均衡">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器负载分析指南：CPU与GPU监控">
+<meta property="og:url" content="https://zhanglixuan0720.github.io/2025/04/10/server-load-analysis/index.html">
+<meta property="og:site_name" content="Lixuan&#39;s Blog">
+<meta property="og:description" content="前言在深度学习任务管理中，了解服务器的资源使用情况至关重要。基于服务器的资源的使用情况，能够有效分析程序是CPU使用密集还是GPU使用密集，优化程序运行性能。本文将介绍如何使用top和gpustat命令来监控和分析服务器的CPU和GPU负载情况。 CPU负载分析：使用top命令基本使用1top top界面解析       系统信息概览（第1-5行）：   第1行：系统运行时间、用户数、负载均衡">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zhanglixuan0720.github.io/2025/04/10/server-load-analysis/top.png">
+<meta property="og:image" content="https://zhanglixuan0720.github.io/2025/04/10/server-load-analysis/gpustat.png">
+<meta property="article:published_time" content="2025-04-10T09:18:00.000Z">
+<meta property="article:modified_time" content="2025-04-10T10:06:53.934Z">
+<meta property="article:author" content="Lixuan Zhang">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="服务器监控">
+<meta property="article:tag" content="CPU">
+<meta property="article:tag" content="GPU">
+<meta property="article:tag" content="性能分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhanglixuan0720.github.io/2025/04/10/server-load-analysis/top.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhanglixuan0720.github.io/2025/04/10/server-load-analysis/"/>
+
+
+
+
+
+  <title>服务器负载分析指南：CPU与GPU监控 | Lixuan's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lixuan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
+            
+            links
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanglixuan0720.github.io/2025/04/10/server-load-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lixuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">服务器负载分析指南：CPU与GPU监控</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2025-04-10T17:18:00+08:00">
+                2025-04-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index">
+                    <span itemprop="name">服务器运维</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B4%9F%E8%BD%BD%E5%88%86%E6%9E%90/" itemprop="url" rel="index">
+                    <span itemprop="name">服务器负载分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在深度学习任务管理中，了解服务器的资源使用情况至关重要。基于服务器的资源的使用情况，能够有效分析程序是CPU使用密集还是GPU使用密集，优化程序运行性能。本文将介绍如何使用<code>top</code>和<code>gpustat</code>命令来监控和分析服务器的CPU和GPU负载情况。</p>
+<h2 id="CPU负载分析：使用top命令"><a href="#CPU负载分析：使用top命令" class="headerlink" title="CPU负载分析：使用top命令"></a>CPU负载分析：使用top命令</h2><h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top</span><br></pre></td></tr></table></figure>
+<h3 id="top界面解析"><a href="#top界面解析" class="headerlink" title="top界面解析"></a>top界面解析</h3><div>
+<center>
+<img src="/2025/04/10/server-load-analysis/top.png" width="75%" height="75%">
+</center>
+</div>
+
+<ol>
+<li>系统信息概览（第1-5行）：</li>
+</ol>
+<ul>
+<li><p>第1行：系统运行时间、用户数、负载均衡</p>
+<ul>
+<li>load average后的三个数字分别表示1分钟、5分钟、15分钟的平均负载</li>
+<li>数值不应超过CPU核心数，否则表示系统超负荷</li>
+</ul>
+</li>
+<li><p>第2行：任务信息</p>
+<ul>
+<li>total：进程总数</li>
+<li>running：正在运行的进程数</li>
+<li>sleeping：睡眠的进程数</li>
+<li>stopped：停止的进程数</li>
+<li>zombie：僵尸进程数</li>
+</ul>
+</li>
+<li><p>第3行：CPU使用率</p>
+<ul>
+<li>us：用户空间占用CPU百分比</li>
+<li>sy：内核空间占用CPU百分比</li>
+<li>ni：用户进程空间内改变过优先级的进程占用CPU百分比</li>
+<li>id：空闲CPU百分比</li>
+<li>wa：等待输入输出的CPU时间百分比</li>
+</ul>
+</li>
+<li><p>第4-5行：内存使用情况</p>
+<ul>
+<li>Mem：物理内存</li>
+<li>Swap：交换空间</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>进程信息（第7行开始）：</li>
+</ol>
+<ul>
+<li>PID：进程ID</li>
+<li>USER：进程所有者</li>
+<li>PR：进程优先级</li>
+<li>NI：nice值（负值表示高优先级，正值表示低优先级）</li>
+<li>VIRT：虚拟内存使用量</li>
+<li>RES：实际物理内存使用量</li>
+<li>SHR：共享内存大小</li>
+<li>S：进程状态</li>
+<li>%CPU：CPU使用率</li>
+<li>%MEM：内存使用率</li>
+<li>TIME+：进程使用的CPU时间总计</li>
+<li>COMMAND：进程名称</li>
+</ul>
+<h3 id="常用交互命令"><a href="#常用交互命令" class="headerlink" title="常用交互命令"></a>常用交互命令</h3><ul>
+<li>P：按CPU使用率排序</li>
+<li>M：按内存使用率排序</li>
+<li>T：按运行时间排序</li>
+<li>k：终止进程（需要输入PID）</li>
+<li>r：重新设置进程优先级</li>
+<li>q：退出top</li>
+</ul>
+<h2 id="GPU负载分析：使用gpustat"><a href="#GPU负载分析：使用gpustat" class="headerlink" title="GPU负载分析：使用gpustat"></a>GPU负载分析：使用gpustat</h2><div>
+<center>
+<img src="/2025/04/10/server-load-analysis/gpustat.png" width="75%" height="75%">
+</center>
+</div>
+
+<h3 id="安装gpustat"><a href="#安装gpustat" class="headerlink" title="安装gpustat"></a>安装gpustat</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install gpustat</span><br></pre></td></tr></table></figure>
+
+<h3 id="基本使用-1"><a href="#基本使用-1" class="headerlink" title="基本使用"></a>基本使用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpustat</span><br></pre></td></tr></table></figure>
+
+<h3 id="输出解析"><a href="#输出解析" class="headerlink" title="输出解析"></a>输出解析</h3><p>每个GPU的信息包含：</p>
+<ul>
+<li>GPU ID：显卡编号</li>
+<li>显卡型号</li>
+<li>温度信息</li>
+<li>GPU利用率</li>
+<li>显存使用情况：已用/总量</li>
+<li>运行在该GPU上的进程信息</li>
+</ul>
+<h3 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h3><ol>
+<li><p>实时监控（每秒更新）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpustat -i 1 <span class="comment"># -i 默认1秒更新</span></span><br></pre></td></tr></table></figure></li>
+<li><p>显示详细进程信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpustat -<span class="built_in">cp</span></span><br></pre></td></tr></table></figure></li>
+<li><p>显示功率使用情况：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpustat --show-power</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="分析要点"><a href="#分析要点" class="headerlink" title="分析要点"></a>分析要点</h2><h3 id="CPU负载分析"><a href="#CPU负载分析" class="headerlink" title="CPU负载分析"></a>CPU负载分析</h3><ol>
+<li>系统负载</li>
+</ol>
+<ul>
+<li>负载值/CPU核心数 &lt; 0.7：系统很闲</li>
+<li>0.7 - 1.0：系统正常</li>
+<li><blockquote>
+<p>1.0：系统繁忙</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>ℹ️ <strong>提示：CPU核心数 可以使用 <code>lscpu</code> 或 <code>nproc</code> 查看</strong></p>
+</blockquote>
+<ol start="2">
+<li>CPU使用率</li>
+</ol>
+<ul>
+<li>高us：用户进程消耗CPU</li>
+<li>高sy：内核消耗CPU，可能有系统调用过多</li>
+<li>高wa：IO瓶颈</li>
+<li>高id：CPU较空闲</li>
+</ul>
+<h3 id="GPU负载分析"><a href="#GPU负载分析" class="headerlink" title="GPU负载分析"></a>GPU负载分析</h3><ol>
+<li>显存使用</li>
+</ol>
+<ul>
+<li>查看是否有显存泄漏 <ul>
+<li>进程结束但显存仍被占用</li>
+<li>程序长时间运行，显存只增不减</li>
+</ul>
+</li>
+<li>评估任务是否合理分配显存</li>
+</ul>
+<ol start="2">
+<li>GPU使用率</li>
+</ol>
+<ul>
+<li>低使用率可能表示数据加载成为瓶颈</li>
+<li>持续100%表示计算密集型任务正常运行</li>
+</ul>
+<ol start="3">
+<li>温度监控</li>
+</ol>
+<ul>
+<li>通常应保持在85℃以下</li>
+<li>持续高温需要检查散热情况</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E6%8E%A7/" rel="tag"># 服务器监控</a>
+          
+            <a href="/tags/CPU/" rel="tag"># CPU</a>
+          
+            <a href="/tags/GPU/" rel="tag"># GPU</a>
+          
+            <a href="/tags/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" rel="tag"># 性能分析</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2025/04/08/ros2-venv/" rel="next" title="在ROS2中使用Python虚拟环境">
+                <i class="fa fa-chevron-left"></i> 在ROS2中使用Python虚拟环境
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanglixuan0720" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:lixuan.zhang@vipl.ict.ac.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU%E8%B4%9F%E8%BD%BD%E5%88%86%E6%9E%90%EF%BC%9A%E4%BD%BF%E7%94%A8top%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">CPU负载分析：使用top命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#top%E7%95%8C%E9%9D%A2%E8%A7%A3%E6%9E%90"><span class="nav-number">2.2.</span> <span class="nav-text">top界面解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E4%BA%A4%E4%BA%92%E5%91%BD%E4%BB%A4"><span class="nav-number">2.3.</span> <span class="nav-text">常用交互命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPU%E8%B4%9F%E8%BD%BD%E5%88%86%E6%9E%90%EF%BC%9A%E4%BD%BF%E7%94%A8gpustat"><span class="nav-number">3.</span> <span class="nav-text">GPU负载分析：使用gpustat</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85gpustat"><span class="nav-number">3.1.</span> <span class="nav-text">安装gpustat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8-1"><span class="nav-number">3.2.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E8%A7%A3%E6%9E%90"><span class="nav-number">3.3.</span> <span class="nav-text">输出解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95"><span class="nav-number">3.4.</span> <span class="nav-text">高级用法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E8%A6%81%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">分析要点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU%E8%B4%9F%E8%BD%BD%E5%88%86%E6%9E%90"><span class="nav-number">4.1.</span> <span class="nav-text">CPU负载分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPU%E8%B4%9F%E8%BD%BD%E5%88%86%E6%9E%90"><span class="nav-number">4.2.</span> <span class="nav-text">GPU负载分析</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lixuan Zhang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
