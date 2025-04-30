@@ -2,9 +2,9 @@
 
 - Meina Kan, **Lixuan Zhang**, Hao Liang, Boyuan Zhang, Minxue Fang, Dongyang Liu, Shiguang Shan, Xilin Chen.  [eLabrador: A Wearable Navigation System for Visually Impaired Individuals](https://doi.org/10.1109/TASE.2025.3541055). *IEEE Transactions on Automation Science and Engineering (T-ASE)*, 2025, Vol. 22, pp. 12228–12244.
 
-- **Lixuan Zhang**, Meina Kan, Shiguang Shan, Xilin Chen. [PreLAR: World Model Pre-training with Learnable Action Representation](https://link.springer.com/chapter/10.1007/978-3-031-73337-6_11). European Conference on Computer Vision (ECCV), 2024.
+- **Lixuan Zhang**, Meina Kan, Shiguang Shan, Xilin Chen. [PreLAR: World Model Pre-training with Learnable Action Representation](https://link.springer.com/chapter/10.1007/978-3-031-73337-6_11). *European Conference on Computer Vision (ECCV)*, 2024.
 
-- **Lixuan Zhang**, Jianzhuang Zhao, Edoardo Lamon, Yabin Wang, Xiaopeng Hong. [Energy efficient multi-robot task allocation constrained by time window and precedence](https://ieeexplore.ieee.org/document/10252157). IEEE Transactions on Automation Science and Engineering (TASE), 2023.
+- **Lixuan Zhang**, Jianzhuang Zhao, Edoardo Lamon, Yabin Wang, Xiaopeng Hong. [Energy efficient multi-robot task allocation constrained by time window and precedence](https://ieeexplore.ieee.org/document/10252157). *IEEE Transactions on Automation Science and Engineering (TASE)*, 2023.
 
 
 <!-- <div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2016</div><img src='images/500x300.png' alt="sym" width="100%"></div></div>
