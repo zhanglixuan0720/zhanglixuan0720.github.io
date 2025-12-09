@@ -1,5 +1,7 @@
 # 📝 Publications 
 
+- Haokun Ju, Lixuan Zhang, Xiangyu Cao, Meina Kan, Shiguang Shan, Xilin Chen. [Walking World Model for Visually Impaired Path Following](https://ieeexplore.ieee.org/document/11282473). *IEEE Robotics and Automation Letters*, pp. 1–8. 2025.
+
 - Meina Kan, **Lixuan Zhang**, Hao Liang, Boyuan Zhang, Minxue Fang, Dongyang Liu, Shiguang Shan, Xilin Chen.  [eLabrador: A Wearable Navigation System for Visually Impaired Individuals](https://doi.org/10.1109/TASE.2025.3541055). *IEEE Transactions on Automation Science and Engineering (T-ASE)*, 2025, Vol. 22, pp. 12228–12244.
 
 - **Lixuan Zhang**, Meina Kan, Shiguang Shan, Xilin Chen. [PreLAR: World Model Pre-training with Learnable Action Representation](https://link.springer.com/chapter/10.1007/978-3-031-73337-6_11). *European Conference on Computer Vision (ECCV)*, 2024.
