@@ -1,12 +1,14 @@
 # 📝 Publications 
 
-- Haokun Ju, Lixuan Zhang, Xiangyu Cao, Meina Kan, Shiguang Shan, Xilin Chen. [Walking World Model for Visually Impaired Path Following](https://ieeexplore.ieee.org/document/11282473). *IEEE Robotics and Automation Letters*, pp. 1–8. 2025.
+- Jiewen Hou, Meina Kan, **Lixuan Zhang**, Hao Liang, Shiguang Shan, Xilin Chen. [Collaborative Map-Based and Route-Based Policy Learning for Continuous Vision-and-Language Navigation](https://doi.org/10.1109/LRA.2026.3662659). *IEEE Robotics and Automation Letters*, 2026, Vol. 11, No. 4, pp. 4345–4352.
+
+- Haokun Ju, **Lixuan Zhang**, Xiangyu Cao, Meina Kan, Shiguang Shan, Xilin Chen. [Walking World Model for Visually Impaired Path Following](https://doi.org/10.1109/LRA.2025.3641097). *IEEE Robotics and Automation Letters*, 2026, Vol. 11, No. 2, pp. 2042–2049.
 
 - Meina Kan, **Lixuan Zhang**, Hao Liang, Boyuan Zhang, Minxue Fang, Dongyang Liu, Shiguang Shan, Xilin Chen.  [eLabrador: A Wearable Navigation System for Visually Impaired Individuals](https://doi.org/10.1109/TASE.2025.3541055). *IEEE Transactions on Automation Science and Engineering (T-ASE)*, 2025, Vol. 22, pp. 12228–12244.
 
 - **Lixuan Zhang**, Meina Kan, Shiguang Shan, Xilin Chen. [PreLAR: World Model Pre-training with Learnable Action Representation](https://link.springer.com/chapter/10.1007/978-3-031-73337-6_11). *European Conference on Computer Vision (ECCV)*, 2024.
 
-- **Lixuan Zhang**, Jianzhuang Zhao, Edoardo Lamon, Yabin Wang, Xiaopeng Hong. [Energy efficient multi-robot task allocation constrained by time window and precedence](https://ieeexplore.ieee.org/document/10252157). *IEEE Transactions on Automation Science and Engineering (TASE)*, 2023.
+- **Lixuan Zhang**, Jianzhuang Zhao, Edoardo Lamon, Yabin Wang, Xiaopeng Hong. [Energy Efficient Multi-Robot Task Allocation Constrained by Time Window and Precedence](https://doi.org/10.1109/TASE.2023.3312214). *IEEE Transactions on Automation Science and Engineering (T-ASE)*, 2025, Vol. 22, pp. 18162–18173.
 
 
 <!-- <div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2016</div><img src='images/500x300.png' alt="sym" width="100%"></div></div>
