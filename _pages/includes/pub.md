@@ -8,7 +8,7 @@
 
 - **Lixuan Zhang**, Meina Kan, Shiguang Shan, Xilin Chen. [PreLAR: World Model Pre-training with Learnable Action Representation](https://link.springer.com/chapter/10.1007/978-3-031-73337-6_11). *European Conference on Computer Vision (ECCV)*, 2024.
 
-- **Lixuan Zhang**, Jianzhuang Zhao, Edoardo Lamon, Yabin Wang, Xiaopeng Hong. [Energy Efficient Multi-Robot Task Allocation Constrained by Time Window and Precedence](https://doi.org/10.1109/TASE.2023.3312214). *IEEE Transactions on Automation Science and Engineering (T-ASE)*, 2025, Vol. 22, pp. 18162–18173.
+- **Lixuan Zhang**, Jianzhuang Zhao, Edoardo Lamon, Yabin Wang, Xiaopeng Hong. [Energy Efficient Multi-Robot Task Allocation Constrained by Time Window and Precedence](https://doi.org/10.1109/TASE.2023.3312214). *IEEE Transactions on Automation Science and Engineering (T-ASE)*, 2023, Vol. 22, pp. 18162–18173.
 
 
 <!-- <div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2016</div><img src='images/500x300.png' alt="sym" width="100%"></div></div>
