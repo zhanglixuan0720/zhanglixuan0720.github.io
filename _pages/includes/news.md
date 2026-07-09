@@ -1,5 +1,6 @@
 # 🔥 News
 
+- *2026/07/10*: &nbsp;🎉🎉 Our paper "Improving Policy Learning via Language-Guided State Representation in World Models" was accepted by RA-L.
 - *2026/01/20*: &nbsp;🎉🎉 Our co-authored paper "Collaborative Map-Based and Route-Based Policy Learning for Continuous Vision-and-Language Navigation" was accepted by RA-L.
 - *2025/11/08*: &nbsp;🎉🎉 Our co-authored paper "Walking World Model for Visually Impaired Path Following" was accepted by RA-L.
 - *2025/09/23*: &nbsp;🎉🎉 The team I worked with has won the 1st Place in the World Model Track of the IROS 2025 World Challenge.

@@ -1,5 +1,7 @@
 # 📝 Publications 
 
+- **Lixuan Zhang** et al. Improving Policy Learning via Language-Guided State Representation in World Models. *IEEE Robotics and Automation Letters*, 2026. (Accepted)
+
 - Jiewen Hou, Meina Kan, **Lixuan Zhang**, Hao Liang, Shiguang Shan, Xilin Chen. [Collaborative Map-Based and Route-Based Policy Learning for Continuous Vision-and-Language Navigation](https://doi.org/10.1109/LRA.2026.3662659). *IEEE Robotics and Automation Letters*, 2026, Vol. 11, No. 4, pp. 4345–4352.
 
 - Haokun Ju, **Lixuan Zhang**, Xiangyu Cao, Meina Kan, Shiguang Shan, Xilin Chen. [Walking World Model for Visually Impaired Path Following](https://doi.org/10.1109/LRA.2025.3641097). *IEEE Robotics and Automation Letters*, 2026, Vol. 11, No. 2, pp. 2042–2049.
