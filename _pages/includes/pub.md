@@ -1,6 +1,6 @@
 # 📝 Publications 
 
-- **Lixuan Zhang** et al. Improving Policy Learning via Language-Guided State Representation in World Models. *IEEE Robotics and Automation Letters*, 2026. (Accepted)
+- **Lixuan Zhang**, Meina Kan, Shiguang Shan, Xilin Chen. Improving Policy Learning via Language-Guided State Representation in World Models. *IEEE Robotics and Automation Letters*, 2026. (Accepted)
 
 - Jiewen Hou, Meina Kan, **Lixuan Zhang**, Hao Liang, Shiguang Shan, Xilin Chen. [Collaborative Map-Based and Route-Based Policy Learning for Continuous Vision-and-Language Navigation](https://doi.org/10.1109/LRA.2026.3662659). *IEEE Robotics and Automation Letters*, 2026, Vol. 11, No. 4, pp. 4345–4352.
 
